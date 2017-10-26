@@ -53,4 +53,4 @@ It is known to work on all three of my active systems:
    
    Change each of the lines in this file to match your system's shutdown/reboot etc. commands.
 
-   [[ configs/i3/.config/i3/i3exit ]]
+   [[configs/i3/.config/i3/i3exit]]
