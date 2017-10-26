@@ -1,0 +1,86 @@
+! URXVT
+URxvt*borderless:         true
+URxvt*internalBorder:     15
+URxvt*jumpScroll:         true
+URxvt*scrollBar:          false
+URxvt*scrollTryOutput:    false
+URxvt*scrollTtyKeypress:  true
+URxvt*urgentOnBell:       true
+URxvt*visualBell:         false
+URxvt*letterSpace:        -1
+URxvt.depth: 32
+URxvt.background:	[95]#fef1ce
+
+URxvt.font: xft:Fira Code:size=11,style=regular
+URxvt.boldFont: xft:Fira Code:size=11,style=bold
+URxvt.italicFont: xft:Fira Code:pixelsize=11,style=bold
+URxvt.boldItalicFont: xft:Fira Code:pixelsize=11,style=bold
+
+! B E T A M A X
+! svbtext 2016
+
+! special
+*.foreground:   #2a2a20
+*.background:   #fef1ce
+! sun-bleached white bg
+!*.background:   #faeeb0
+*.cursorColor:  #2a2a20
+
+! black
+*.color0:       #b6a974
+*.color8:       #887f57
+
+!! red
+*.color1:       #ebbe39
+*.color9:       #c39d2f
+
+! green
+*.color2:       #ea8235
+*.color10:      #c36c2c
+
+! yellow
+*.color3:       #df5029
+*.color11:      #c54724
+
+! blue
+*.color4:       #b4171e
+*.color12:      #9b141a
+
+! magenta
+*.color5:       #850f25
+*.color13:      #660c1d
+
+! cyan
+*.color6:       #550c27
+*.color14:      #39081a
+
+! white
+*.color7:       #421439
+*.color15:      #280c22
+
+
+! XFT
+Xft.autohint: 1
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgba
+Xft.dpi: 100
+
+! ROFI
+
+rofi.location:          0
+
+rofi.separator-style:   solid
+rofi.padding:           50
+rofi.hide-scrollbar:    true
+rofi.line-margin:       0
+rofi.yoffset:           10
+rofi.xoffset:           100
+rofi.font:              Fira Code 9
+
+rofi.color-enabled: true
+rofi.color-window: #52312b, #002b36, #000000
+rofi.color-normal: #52312b, #fdd7b7, #52312b, #3c1518, #f4a259
+rofi.color-urgent: #fdf6e3, #dc322f, #eee8d5, #dc322f, #fdf6e3
