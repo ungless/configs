@@ -23,3 +23,34 @@ It is known to work on all three of my active systems:
   #+BEGIN_SRC bash
   stow i3
   #+END_SRC
+
+* Software 
+  I use the following software:
+  - emacs
+  - Xorg
+  - Xscreensaver
+  - Zsh
+  - i3-gaps
+  - i3blocks
+  - feh
+  
+  Also, I frequently use the *Fira Code* font.
+
+  There is also a heap of software that I have shortcuts for in my i3 configuration. This can be replaced in the config if there should be issues
+
+* Potential Issues
+  I forsee there may be the following issues when running this configuration:
+
+** Missing sound file in i3
+   Remove the `mpv` command in these lines:
+   #+BEGIN_SRC conf
+   bindsym XF86AudioRaiseVolume exec amixer set Master 2%+ && mpv /usr/share/sounds/gnome/default/alerts/drip.ogg
+   bindsym XF86AudioLowerVolume exec amixer set Master 2%- && mpv /usr/share/sounds/gnome/default/alerts/drip.ogg
+   #+END_SRC
+
+** Super-Shift-Tab menu broken
+   This is due to not using systemd.
+   
+   Change each of the lines in this file to match your system's shutdown/reboot etc. commands.
+
+   [[ configs/i3/.config/i3/i3exit ]]
