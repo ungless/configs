@@ -1,0 +1,25 @@
+#+TITLE: Max's Configs
+
+Here are my configurations for my system. 
+
+You may call them dotfiles. 
+
+It is known to work on all three of my active systems:
+- Gentoo Linux
+- Solus OS
+- Arch Linux
+
+* Usage
+  I use [[https://www.gnu.org/software/stow/][GNU Stow]] for farming symlinks into one central folder.
+
+  Should you wish to use my configs, run:
+  #+BEGIN_SRC bash
+  stow <program name>
+  #+END_SRC
+  
+  Replace `<program name>` with any one of the directories seen in this repository.
+  
+  e.g.
+  #+BEGIN_SRC bash
+  stow i3
+  #+END_SRC
