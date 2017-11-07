@@ -1,6 +1,6 @@
 # = # = # Variables # = # = #
 set $mod Mod4
-set $terminal gnome-terminal
+set $terminal i3-sensible-terminal
 
 set $left h
 set $down n
@@ -17,13 +17,13 @@ set $indicator #fff
 set $urgent_border #fff
 set $urgent_background #fff
 
-set $wallpaper $HOME/Pictures/hubble.jpg
+set $wallpaper $HOME/Pictures/lake.jpg
 
 set $primary-display DisplayPort-0
 set $secondary-display DVI-0
 
 # = # = # Fonts # = # = #
-font pango:Fira Code 9
+font pango:Iosevka 9
 
 # = # = # Key bindings # = # = #
 bindsym $mod+Return exec $terminal
@@ -165,7 +165,7 @@ client.urgent            $urgent_border   $urgent_background  $urgent_text   $in
 # = # = # Bar # = # = #
 bar {
         status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
-	font pango:Fira Code 11
+	font pango:Iosevka 11
         height 35
 
 	colors {
@@ -182,7 +182,7 @@ gaps outer 30
 # = # = # Startup Tools # = # = ##
 exec_always --no-startup-id /usr/bin/feh --bg-scale '$wallpaper'
 # Slight issue with feh (above), needs external script to work.
-exec_always --no-startup-id sh ~/.fehbg
+# exec_always --no-startup-id sh ~/.fehbg
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --config $HOME/.config/i3/compton.conf -b
 exec --no-startup-id budgie-polkit-dialog
