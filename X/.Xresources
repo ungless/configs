@@ -11,10 +11,10 @@ URxvt*letterSpace:        -1
 URxvt.depth: 32
 URxvt.background:	[95]#fef1ce
 
-URxvt.font: xft:Fira Code:size=11,style=regular
-URxvt.boldFont: xft:Fira Code:size=11,style=bold
-URxvt.italicFont: xft:Fira Code:pixelsize=11,style=bold
-URxvt.boldItalicFont: xft:Fira Code:pixelsize=11,style=bold
+URxvt.font: xft:Iosevka:size=11,style=regular
+URxvt.boldFont: xft:Iosevka:size=11,style=bold
+URxvt.italicFont: xft:Iosevka:pixelsize=11,style=bold
+URxvt.boldItalicFont: xft:Iosevka:pixelsize=11,style=bold
 
 ! B E T A M A X
 ! svbtext 2016
@@ -78,7 +78,8 @@ rofi.hide-scrollbar:    true
 rofi.line-margin:       0
 rofi.yoffset:           10
 rofi.xoffset:           100
-rofi.font:              Fira Code 9
+rofi.font:              Iosevka 9
+rofi.show-icons:        true
 
 rofi.color-enabled: true
 rofi.color-window: #52312b, #002b36, #000000
