@@ -16,7 +16,7 @@
  '(org-agenda-files (quote ("~/organizer.org")))
  '(package-selected-packages
    (quote
-    (spaceline writeroom-mode emmet-mode web-mode wakatime-mode sudo-edit nlinum-relative elpy yas-snippet org-capture white-sand-theme material-theme evil exec-path-from-shell elfeed dumb-jump try counsel company-statistics company-quickhelp company ace-window use-package)))
+    (which-key spaceline writeroom-mode emmet-mode web-mode wakatime-mode sudo-edit nlinum-relative elpy yas-snippet org-capture white-sand-theme material-theme evil exec-path-from-shell elfeed dumb-jump try counsel company-statistics company-quickhelp company ace-window use-package)))
  '(wakatime-cli-path "/usr/bin/wakatime")
  '(wakatime-python-bin nil))
 (custom-set-faces
