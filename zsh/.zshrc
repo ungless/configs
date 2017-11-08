@@ -24,7 +24,7 @@ workspace=$home/workspace
 # VARIABLES
 export EDITOR='emacs'
 export WORKSPACE=$workspace
-export GOPATH=$workspace/go
+export GOPATH=$workspace/programming/go
 export GOBIN=$GOPATH/bin
 
 # ALIASES
