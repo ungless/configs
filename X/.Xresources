@@ -72,6 +72,7 @@ Xft.dpi: 100
 
 rofi.location:          0
 
+rofi.fullscreen:        false
 rofi.separator-style:   solid
 rofi.padding:           50
 rofi.hide-scrollbar:    true
@@ -82,6 +83,6 @@ rofi.font:              Iosevka 9
 rofi.show-icons:        true
 
 rofi.color-enabled: true
-rofi.color-window: #52312b, #002b36, #000000
-rofi.color-normal: #52312b, #fdd7b7, #52312b, #3c1518, #f4a259
+rofi.color-window: #305252, #002b36, #000000
+rofi.color-normal: #305252, #fdd7b7, #305252, #759aab, #f4a259
 rofi.color-urgent: #fdf6e3, #dc322f, #eee8d5, #dc322f, #fdf6e3
