@@ -7,10 +7,10 @@ set $down n
 set $up e
 set $right i
 
-set $focused_background #b36a5e
-set $unfocused_background #52312b
-set $focused_border #b36a5e
-set $unfocused_border #816964
+set $focused_background #488286
+set $unfocused_background #454545
+set $focused_border #373e40
+set $unfocused_border #
 set $text_color #fdd7b7
 set $unfocused_text #816964
 set $indicator #fff
@@ -188,6 +188,11 @@ bar {
 # = # = # Gaps # = # = #
 gaps inner 15
 gaps outer 30
+
+# = # = # Proper Application Workspaces # = # = #
+assign [class="Telegram"] $ws9
+assign [class="Steam"] $ws8
+assign [class="Rhythmbox"] $ws10
 
 # = # = # Startup Tools # = # = #
 #exec_always --no-startup-id /usr/bin/feh --bg-scale '$wallpaper'
