@@ -410,6 +410,7 @@
      :ensure t)
 
     (use-package white-sand-theme
+      :disabled t
       :ensure t
       :config (load-theme 'white-sand t))
 
@@ -417,6 +418,10 @@
       :disabled t
       :ensure t
       :config (load-theme 'twilight-bright t))
+
+    (use-package planet-theme
+      :ensure t
+      :config (load-theme 'planet t))
   #+END_SRC
 * Try
 #+BEGIN_SRC emacs-lisp 
