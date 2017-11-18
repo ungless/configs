@@ -198,43 +198,22 @@
   #+END_SRC
 * Mail
   #+BEGIN_SRC emacs-lisp
-    (setq mu4e-maildir (expand-file-name "~/Mail"))
+    (setq user-full-name "Max Ungless")
+    (setq user-mail-address "max@maxungless.com")
 
-    (setq mu4e-drafts-folder "/[mail].Drafts")
-    (setq mu4e-sent-folder   "/[mail].Sent Mail")
-    (setq mu4e-trash-folder  "/[mail].Trash")
-
-    (setq mu4e-sent-messages-behavior 'delete)
-
-    (setq mu4e-maildir-shortcuts
-          '(("/INBOX"             . ?i)
-            ("/[mail].Sent Mail" . ?s)
-            ("/[mail].Trash"     . ?t)))
-
-    ;; allow for updating mail using 'U' in the main view:
-    (setq mu4e-get-mail-command "offlineimap")
-
-    ;; something about ourselves
-    ;; I don't use a signature...
-    (setq
-     user-mail-address "max@maxungless.com"
-     user-full-name  "Max Ungless"
-     ;; message-signature
-     ;;  (concat
-     ;;    "Foo X. Bar\n"
-     ;;    "http://www.example.com\n")
-    )
-
-    (setq message-send-mail-function 'smtpmail-send-it
-          starttls-use-gnutls t
-          smtpmail-starttls-credentials
-          '(("smtp.webfaction.com" 587 nil nil))
-          smtpmail-auth-credentials
-          (expand-file-name "~/.authinfo.gpg")
+    (require 'smtpmail)
+    (require 'starttls)
+    (setq send-mail-function 'smtpmail-send-it
+          message-send-mail-function 'smtpmail-send-it
+          smtpmail-starttls-credentials '(("smtp.webfaction.com" 587 nil nil))
+          smtpmail-auth-credentials (expand-file-name "~/.authinfo")
           smtpmail-default-smtp-server "smtp.webfaction.com"
           smtpmail-smtp-server "smtp.webfaction.com"
           smtpmail-smtp-service 587
           smtpmail-debug-info t)
+
+    (use-package notmuch
+      :ensure t)
   #+END_SRC
 * Magit
 #+BEGIN_SRC emacs-lisp
