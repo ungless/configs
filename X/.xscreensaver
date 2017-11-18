@@ -39,9 +39,8 @@ selected:	-1
 
 textMode:	file
 textLiteral:	XScreenSaver
-textFile:	/etc/gentoo-release
+textFile:	/etc/arch-irelease
 textProgram:	fortune
-textURL:	https://planet.gentoo.org/rss20.xml
 
 programs:								      \
 				maze -root				    \n\
