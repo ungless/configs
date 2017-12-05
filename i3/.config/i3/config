@@ -17,7 +17,12 @@ set $indicator #fff
 set $urgent_border #fff
 set $urgent_background #fff
 
-set $wallpaper $HOME/Pictures/lake.jpg
+set $focused
+set $unfocused
+set $text
+set $urgent
+
+set $wallpaper $HOME/Pictures/iceland.jpg
 
 set $primary-display DisplayPort-0
 set $secondary-display DVI-0
@@ -34,7 +39,7 @@ set $ws9 "9: "
 set $ws10 "10: "
 
 # = # = # Fonts # = # = #
-font pango:Iosevka 9
+font pango:Share Tech Mono 9
 
 # = # = # Key bindings # = # = #
 bindsym $mod+Return exec $terminal
@@ -44,7 +49,7 @@ bindsym $mod+Shift+p exec firefox --private-window
 bindsym Print exec scrot '%Y-%m-%d.png' -e 'mv $f ~/Pictures/Screenshots/'
 
 bindsym $mod+Shift+q kill
-bindsym $mod+d exec --no-startup-id  rofi -show drun -modi drun -opacity "85" -font "Fira Code 18"
+bindsym $mod+d exec --no-startup-id  rofi -show drun -modi drun
 bindsym $mod+a focus parent
 
 # = Window Focus = #
@@ -133,6 +138,11 @@ bindsym XF86AudioLowerVolume exec amixer set Master 2%-
 bindsym XF86AudioMute exec amixer set Master 0
 bindsym XF86Sleep exec systemctl suspend
 
+# = Music Keybindings = #
+bindsym $mod+Shift+period exec playerctl next
+bindsym $mod+Shift+comma exec playerctl previous
+bindsym $mod+Shift+apostrophe exec playerctl play-pause
+
 # = # = # Modes # = # = #
 mode "resize" {
         bindsym $down resize shrink width 10 px or 10 ppt
@@ -211,15 +221,16 @@ client.urgent            $urgent_border   $urgent_background  $urgent_text   $in
 
 # = # = # Bar # = # = #
 bar {
-        status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
-	font pango:Iosevka 11
-        height 35
-
-	colors {
-	       background $unfocused_background
-	       focused_workspace $focused_border $focused_background $text_color
-	       inactive_workspace $unfocused_border $unfocused_background $text_color
-	}
+    i3bar_command $HOME/.config/polybar/launch.sh
+#        status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
+#	font pango:Share Tech Mono 11
+#        height 35
+#
+#	colors {
+#	       background $unfocused_background
+#	       focused_workspace $focused_border $focused_background $text_color
+#	       inactive_workspace $unfocused_border $unfocused_background $text_color
+# 	}
 }
 
 # = # = # Gaps # = # = #
@@ -233,9 +244,10 @@ assign [class="Steam"] $ws8
 assign [class="Rhythmbox"] $ws10
 
 # = # = # Startup Tools # = # = #
-#exec_always --no-startup-id /usr/bin/feh --bg-scale '$wallpaper'
+exec_always --no-startup-id $HOME/.config/polybar/start.sh
+exec_always --no-startup-id feh --bg-scale $wallpaper
 # Slight issue with feh (above), needs external script to work.
-exec_always --no-startup-id sh ~/.fehbg
+#exec_always --no-startup-id sh ~/.fehbg
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --config $HOME/.config/i3/compton.conf -b
 exec --no-startup-id devmon
