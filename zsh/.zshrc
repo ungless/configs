@@ -27,6 +27,8 @@ export WORKSPACE=$workspace
 export GOPATH=$workspace/programming/go
 export GOBIN=$GOPATH/bin
 
+export PATH=$GOBIN:$PATH
+
 # ALIASES
 alias zshreload="source ~/.zshrc"
 
