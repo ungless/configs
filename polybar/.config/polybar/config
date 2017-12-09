@@ -1,7 +1,6 @@
 [colors]
 background = #3f0d12
 background-alt = #444
-;foreground = ${xrdb:color7:#222}
 foreground = #f0f0f0
 foreground-alt = #555
 primary = #d5bf86
@@ -9,9 +8,9 @@ secondary = #3f0d12
 alert = #bd2c40
 
 [bar/main]
-;monitor = ${env:MONITOR:HDMI-1}
+monitor = ${env:MONITOR}
 width = 100%
-height = 50
+height = 40
 offset-x = 0%
 offset-y = 0%
 fixed-center = true
@@ -22,19 +21,19 @@ foreground = ${colors.foreground}
 line-size = 0
 line-color = #f00
 
-padding-left = 10
-padding-right = 10
+padding-left = 2
+padding-right = 2
 
 module-margin-left = 1
-module-margin-right = 2
+module-margin-right = 1
 
-font-0 = "Share Tech Mono:pixelsize=12;0"
+font-0 = "Iosevka:pixelsize=12;0"
 font-1 = "Roboto:size=11:weight=bold;2"
 font-2 = "Noto Sans:size=11;1"
 
 modules-left = i3
 modules-center = time
-modules-right = filesystem cpu volume wlan eth date
+modules-right = weather cpu volume wlan eth date
 
 tray-position = right
 tray-padding = 0
@@ -58,28 +57,36 @@ label-unmounted-foreground = ${colors.foreground-alt}
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode>
+format-underline = ${colors.primary}
 index-sort = true
 wrapping-scroll = false
+fuzzy-match = false
 
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 label-mode-padding = 4
 
-ws-icon-0 = 1♚
-ws-icon-1 = 2♛
-ws-icon-2 = 3♜
-ws-icon-3 = 4♝
-ws-icon-4 = 5♞
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
+ws-icon-default = ♟
 
-label-focused = %index% 
+label-focused = %index% %icon%
 label-focused-foreground = ${colors.foreground-alt}
 label-focused-background = ${colors.primary}
 label-focused-padding = 2
 
-label-unfocused = %index% 
+label-unfocused = %index% %icon%
 label-unfocused-padding = 2
 
-label-visible = %index% 
+label-visible = %index% %icon%
 label-visible-underline = ${colors.primary}
 label-visible-padding = 2
 ;
@@ -103,7 +110,7 @@ label-urgent-padding = 2
 ;
 ;[module/xbacklight]
 ;type = internal/xbacklight
-;
+
 ;format = <label> <bar>
 ;label = BL
 ;
@@ -126,10 +133,7 @@ label-urgent-padding = 2
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = ${colors.primary}
-label = CPU %percentage:2%%
+label = CPU %percentage%%
 
 [module/wlan]
 type = internal/network
@@ -174,15 +178,8 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date = "%A %_d, %B %Y"
-
-
-
-format-prefix = 
-format-prefix-foreground = ${colors.foreground-alt}
-format-underline = 
-
-label = %date% 
+date = "%A %d, %B %Y"
+label = %date%
 
 [module/time]
 type = internal/date
@@ -199,29 +196,12 @@ format-volume = <label-volume>
 label-volume = VOLUME %percentage%%
 label-volume-foreground = ${root.foreground}
 
-format-muted-prefix = " "
 format-muted-foreground = ${colors.foreground-alt}
-label-muted = sound muted
+label-muted = MUTED
 ramp-NAME-0 = 🔈
 ramp-NAME-1 = 🔉
 ramp-NAME-2 = 🔊
 
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
-bar-volume-foreground-5 = #f5a70a
-bar-volume-foreground-6 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-indicator-font = 2
-bar-volume-fill = ─
-bar-volume-fill-font = 2
-bar-volume-empty = ─
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.foreground-alt}
 format-volume-underline = ${colors.primary} 
 
 [module/temperature]
@@ -243,6 +223,8 @@ ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
 
-[global/wm]
-margin-top = 5
-margin-bottom = 5
+[module/weather]
+type = custom/script
+exec = $HOME/.config/i3/scripts/weather.sh London
+format-prefix = "WEATHER"
+interval = 90
