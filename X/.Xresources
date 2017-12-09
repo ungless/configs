@@ -9,7 +9,7 @@ URxvt*urgentOnBell:       true
 URxvt*visualBell:         false
 URxvt*letterSpace:        -1
 URxvt.depth: 32
-URxvt.background:	[95]#fef1ce
+!URxvt.background:	[95]#fef1ce
 
 URxvt.font: xft:Iosevka:size=11,style=regular
 URxvt.boldFont: xft:Iosevka:size=11,style=bold
@@ -20,43 +20,64 @@ URxvt.boldItalicFont: xft:Iosevka:pixelsize=11,style=bold
 ! svbtext 2016
 
 ! special
-*.foreground:   #2a2a20
-*.background:   #fef1ce
-! sun-bleached white bg
-!*.background:   #faeeb0
-*.cursorColor:  #2a2a20
+! *.foreground:   #2a2a20
+! *.background:   #fef1ce
+! ! sun-bleached white bg
+! !*.background:   #faeeb0
+! *.cursorColor:  #2a2a20
 
-! black
-*.color0:       #b6a974
-*.color8:       #887f57
+! ! black
+! *.color0:       #b6a974
+! *.color8:       #887f57
 
-!! red
-*.color1:       #ebbe39
-*.color9:       #c39d2f
+! !! red
+! *.color1:       #ebbe39
+! *.color9:       #c39d2f
 
-! green
-*.color2:       #ea8235
-*.color10:      #c36c2c
+! ! green
+! *.color2:       #ea8235
+! *.color10:      #c36c2c
 
-! yellow
-*.color3:       #df5029
-*.color11:      #c54724
+! ! yellow
+! *.color3:       #df5029
+! *.color11:      #c54724
 
-! blue
-*.color4:       #b4171e
-*.color12:      #9b141a
+! ! blue
+! *.color4:       #b4171e
+! *.color12:      #9b141a
 
-! magenta
-*.color5:       #850f25
-*.color13:      #660c1d
+! ! magenta
+! *.color5:       #850f25
+! *.color13:      #660c1d
 
-! cyan
-*.color6:       #550c27
-*.color14:      #39081a
+! ! cyan
+! *.color6:       #550c27
+! *.color14:      #39081a
 
-! white
-*.color7:       #421439
-*.color15:      #280c22
+! ! white
+! *.color7:       #421439
+! *.color15:      #280c22
+
+! Molokai theme
+*background: #101010
+*foreground: #d0d0d0
+*cursorColor: #d0d0d0
+*color0: #101010
+*color1: #960050
+*color2: #66aa11
+*color3: #c47f2c
+*color4: #30309b
+*color5: #7e40a5
+*color6: #3579a8
+*color7: #9999aa
+*color8: #303030
+*color9: #ff0090
+*color10: #80ff00
+*color11: #ffba68
+*color12: #5f5fee
+*color13: #bb88dd
+*color14: #4eb4fa
+*color15: #d0d0d0
 
 
 ! XFT
