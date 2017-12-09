@@ -7,7 +7,7 @@ set $down n
 set $up e
 set $right i
 
-set $focused_background #488286
+set $focused_background #3f0d12
 set $unfocused_background #454545
 set $focused_border #373e40
 set $unfocused_border #
@@ -22,7 +22,7 @@ set $unfocused
 set $text
 set $urgent
 
-set $wallpaper $HOME/Pictures/iceland.jpg
+set $wallpaper $HOME/Pictures/wallpaper.png
 
 set $primary-display DisplayPort-0
 set $secondary-display DVI-0
@@ -221,7 +221,7 @@ client.urgent            $urgent_border   $urgent_background  $urgent_text   $in
 
 # = # = # Bar # = # = #
 bar {
-    i3bar_command $HOME/.config/polybar/launch.sh
+    i3bar_command $HOME/.config/polybar/start.sh
 #        status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
 #	font pango:Share Tech Mono 11
 #        height 35
@@ -244,10 +244,9 @@ assign [class="Steam"] $ws8
 assign [class="Rhythmbox"] $ws10
 
 # = # = # Startup Tools # = # = #
-exec_always --no-startup-id $HOME/.config/polybar/start.sh
+exec_always --no-startup-id node "$HOME/.config/i3/scripts/wallpaper.js" "$HOME/Pictures/wallpaper.png"
 exec_always --no-startup-id feh --bg-scale $wallpaper
-# Slight issue with feh (above), needs external script to work.
-#exec_always --no-startup-id sh ~/.fehbg
+
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --config $HOME/.config/i3/compton.conf -b
 exec --no-startup-id devmon
