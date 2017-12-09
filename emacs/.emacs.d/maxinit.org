@@ -100,7 +100,8 @@
 #+BEGIN_SRC emacs-lisp
   (use-package exec-path-from-shell
     :ensure t
-    :init (exec-path-from-shell-copy-env "GOPATH"))
+    :init (exec-path-from-shell-copy-env "GOPATH")
+    (exec-path-from-shell-copy-env "PATH"))
 #+END_SRC
 * Eshell
 #+BEGIN_SRC emacs-lisp
@@ -401,7 +402,12 @@
 
     (use-package planet-theme
       :ensure t
+      :disabled t
       :config (load-theme 'planet t))
+
+    (use-package molokai-theme
+      :ensure t
+      :config (load-theme 'molokai t))
   #+END_SRC
 * Try
 #+BEGIN_SRC emacs-lisp 
