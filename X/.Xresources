@@ -92,18 +92,20 @@ Xft.dpi: 100
 ! ROFI
 
 rofi.location:          0
+rofi.width:             20
 
 rofi.fullscreen:        false
 rofi.separator-style:   solid
 rofi.padding:           50
 rofi.hide-scrollbar:    true
 rofi.line-margin:       0
-rofi.yoffset:           10
-rofi.xoffset:           100
-rofi.font:              Iosevka 9
+rofi.font:              Iosevka 15
 rofi.show-icons:        true
 
 rofi.color-enabled: true
-rofi.color-window: #305252, #002b36, #000000
-rofi.color-normal: #305252, #fdd7b7, #305252, #759aab, #f4a259
-rofi.color-urgent: #fdf6e3, #dc322f, #eee8d5, #dc322f, #fdf6e3
+!                       'background', 'border'
+rofi.color-window:      argb:ff191919, argb:dc111111
+! State:                'bg',          'fg',   'bgalt',       'hlbg',        'hlfg'
+rofi.color-normal:      argb:00333333, #ffffff, argb:00333333, argb:003F0D12, argb:ffefa211
+rofi.color-urgent:      argb:00333333, #ffffff, argb:00333333, argb:003F0D12, argb:ffefa211
+rofi.color-active: argb:00333333, #ffffff, argb:00333333, argb:00333333, argb:ffefa211
