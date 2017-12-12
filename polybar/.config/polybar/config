@@ -1,9 +1,9 @@
 [colors]
-background = #3f0d12
+background = #191919
 background-alt = #444
 foreground = #f0f0f0
 foreground-alt = #555
-primary = #d5bf86
+primary = #cccccc
 secondary = #3f0d12
 alert = #bd2c40
 
@@ -33,7 +33,7 @@ font-2 = "Noto Sans:size=11;1"
 
 modules-left = i3
 modules-center = time
-modules-right = weather cpu volume wlan eth date
+modules-right = weather cpu volume wlan eth date day
 
 tray-position = right
 tray-padding = 0
@@ -227,4 +227,9 @@ ramp-foreground = ${colors.foreground-alt}
 type = custom/script
 exec = $HOME/.config/i3/scripts/weather.sh London
 format-prefix = "WEATHER"
+interval = 90
+
+[module/day]
+type = custom/script
+exec = $HOME/.config/i3/scripts/get_day.sh
 interval = 90
