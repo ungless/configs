@@ -7,11 +7,11 @@ set $down n
 set $up e
 set $right i
 
-set $focused_background #3f0d12
-set $unfocused_background #454545
-set $focused_border #373e40
-set $unfocused_border #
-set $text_color #fdd7b7
+set $focused_background #cccccc
+set $unfocused_background #191919
+set $focused_border #cccccc
+set $unfocused_border #191919
+set $text_color #cccccc
 set $unfocused_text #816964
 set $indicator #fff
 set $urgent_border #fff
@@ -39,7 +39,7 @@ set $ws9 "9: "
 set $ws10 "10: "
 
 # = # = # Fonts # = # = #
-font pango:Share Tech Mono 9
+font pango:Iosevka 9
 
 # = # = # Key bindings # = # = #
 bindsym $mod+Return exec $terminal
@@ -222,21 +222,14 @@ client.urgent            $urgent_border   $urgent_background  $urgent_text   $in
 # = # = # Bar # = # = #
 bar {
     i3bar_command $HOME/.config/polybar/start.sh
-#        status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
-#	font pango:Share Tech Mono 11
-#        height 35
-#
-#	colors {
-#	       background $unfocused_background
-#	       focused_workspace $focused_border $focused_background $text_color
-#	       inactive_workspace $unfocused_border $unfocused_background $text_color
-# 	}
 }
 
 # = # = # Gaps # = # = #
-gaps inner 30
-gaps outer 2
+gaps inner 0
+gaps outer 0
 for_window [class="^.*"] border pixel 3
+smart_borders on
+smart_gaps on
 
 # = # = # Proper Application Workspaces # = # = #
 assign [class="Telegram"] $ws9
