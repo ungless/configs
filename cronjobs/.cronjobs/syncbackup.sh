@@ -6,6 +6,14 @@ TEMP_FILE=`mktemp --suffix .workspacebackup`
 touch $TEMP_FILE
 
 rsync --progress -a -r /home/max/workspace/ /mnt/data/Linux/workspace
+
+rm $TEMP_FILE
+
+echo "-------------- **** Starting Internal Drive Backup $(date) **** -------------"
+
+TEMP_FILE=`mktemp --suffix .internalbackup`
+touch $TEMP_FILE
+
 rsync --progress -a -r /mnt/data/ /mnt/backup/
 
 rm $TEMP_FILE
@@ -41,4 +49,3 @@ rsync --progress -a -r /home/max/Music /mnt/data/Linux
 rm $TEMP_FILE
 
 echo "Internal Backup Successful: $(date)"
-rm $TEMP_FILE
