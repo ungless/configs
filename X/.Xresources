@@ -92,7 +92,7 @@ Xft.dpi: 100
 ! ROFI
 
 rofi.location:          0
-rofi.width:             20
+rofi.width:             30%
 
 rofi.fullscreen:        false
 rofi.separator-style:   solid
