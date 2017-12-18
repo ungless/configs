@@ -4,7 +4,7 @@ background-alt = #444
 foreground = #f0f0f0
 foreground-alt = #555
 primary = #cccccc
-secondary = #3f0d12
+secondary = #dea54b
 alert = #bd2c40
 
 [bar/main]
@@ -28,11 +28,11 @@ module-margin-left = 1
 module-margin-right = 1
 
 font-0 = "Iosevka:pixelsize=12;0"
-font-1 = "Roboto:size=11:weight=bold;2"
+font-1 = "FontAwesome:size=11;2"
 font-2 = "Noto Sans:size=11;1"
 
 modules-left = i3
-modules-center = time
+modules-center = time backup
 modules-right = weather cpu volume wlan eth date day
 
 tray-position = right
@@ -59,39 +59,41 @@ type = internal/i3
 format = <label-state> <label-mode>
 format-underline = ${colors.primary}
 index-sort = true
-wrapping-scroll = false
+wrapping-scroll = true
 fuzzy-match = false
+strip-wsnumbers = true
+pin-workspaces = false
 
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 label-mode-padding = 4
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
+ws-icon-0 = 1: ;
+ws-icon-1 = 2: ;
+ws-icon-2 = 3: ;
+ws-icon-3 = 4: ;
+ws-icon-4 = 5: ;
+ws-icon-5 = 6: ;
+ws-icon-6 = 7: ;
+ws-icon-7 = 8: ;
+ws-icon-8 = 9: ;
+ws-icon-9 = 10: ;
 ws-icon-default = ♟
 
-label-focused = %index% %icon%
+label-focused = %index%: %icon%
 label-focused-foreground = ${colors.foreground-alt}
 label-focused-background = ${colors.primary}
 label-focused-padding = 2
 
-label-unfocused = %index% %icon%
+label-unfocused = %index%: %icon%
 label-unfocused-padding = 2
 
-label-visible = %index% %icon%
+label-visible = %index%: %icon%
 label-visible-underline = ${colors.primary}
 label-visible-padding = 2
 ;
 ;; urgent = Workspace with urgency hint set
-label-urgent = %index%
+label-urgent = %index%: %icon%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 ;
@@ -226,10 +228,17 @@ ramp-foreground = ${colors.foreground-alt}
 [module/weather]
 type = custom/script
 exec = $HOME/.config/i3/scripts/weather.sh London
-format-prefix = "WEATHER"
+format-prefix = "WEATHER "
 interval = 90
 
 [module/day]
 type = custom/script
 exec = $HOME/.config/i3/scripts/get_day.sh
 interval = 90
+
+[module/backup]
+type = custom/script
+exec = $HOME/.cronjobs/isbackingup.sh
+
+format-foreground = ${colors.secondary}
+interval = 5
