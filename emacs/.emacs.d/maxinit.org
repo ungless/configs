@@ -183,6 +183,8 @@
 #+BEGIN_SRC emacs-lisp
   (bind-key "C-x t" 'sort-lines)
   (bind-key "C-x n" (lambda() (interactive) (projectile-find-file-in-directory "/home/max/workspace/org/programming/projects/")))
+  (bind-key "C-c r" 'mu4e)
+  (bind-key "C-c c" 'mu4e-compose-new)
 #+END_SRC
 * Line numbers
   #+BEGIN_SRC emacs-lisp
@@ -199,6 +201,14 @@
   #+END_SRC
 * Mail
   #+BEGIN_SRC emacs-lisp
+    (require 'mu4e)
+
+    (setq mu4e-maildir-shortcuts
+          '(("/INBOX"             . ?i)))
+    (setq mu4e-maildir "~/mail")
+    (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+    (setq mu4e-get-mail-command "offlineimap")
+
     (setq user-full-name "Max Ungless")
     (setq user-mail-address "max@maxungless.com")
 
@@ -212,15 +222,11 @@
           smtpmail-smtp-server "smtp.webfaction.com"
           smtpmail-smtp-service 587
           smtpmail-debug-info t)
-
-    (use-package notmuch
-      :ensure t)
   #+END_SRC
 * Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
-    :bind ("C-c c" . magit-commit)
     :bind ("C-c s" . magit-status))
 #+END_SRC
 * Mode line
@@ -249,7 +255,7 @@
   #+BEGIN_SRC emacs-lisp
     (use-package bongo
       :ensure t
-      :bind ("C-c m" . bongo))
+      :bind ("C-c b" . bongo))
   #+END_SRC
 * Nyan Mode
   #+BEGIN_SRC emacs-lisp
@@ -272,7 +278,7 @@
    #+END_SRC
 ** Keybindings
    #+BEGIN_SRC emacs-lisp
-     (bind-key "C-c r" 'org-capture)
+     (bind-key "C-c p" 'org-capture)
      (bind-key "C-c a" 'org-agenda)
      (global-set-key (kbd "C-c o") 
                      (lambda () (interactive) (find-file org-default-notes-file)))
