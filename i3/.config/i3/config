@@ -11,7 +11,7 @@ set $focused_background #cccccc
 set $unfocused_background #191919
 set $focused_border #cccccc
 set $unfocused_border #191919
-set $text_color #cccccc
+set $text_color #191919
 set $unfocused_text #816964
 set $indicator #fff
 set $urgent_border #fff
