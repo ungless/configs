@@ -2,7 +2,7 @@
 # Written by xscreensaver-demo 5.36 for max on Sat Oct 14 07:26:14 2017.
 # https://www.jwz.org/xscreensaver/
 
-timeout:	0:15:00
+timeout:	0:30:00
 cycle:		0:05:00
 lock:		True
 lockTimeout:	0:30:00
@@ -39,7 +39,7 @@ selected:	-1
 
 textMode:	file
 textLiteral:	XScreenSaver
-textFile:	/etc/arch-irelease
+textFile:	/etc/arch-release
 textProgram:	fortune
 
 programs:								      \
