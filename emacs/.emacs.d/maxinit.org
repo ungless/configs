@@ -275,6 +275,9 @@
    #+BEGIN_SRC emacs-lisp
      (setq org-directory "~/workspace/org/")
      (setq org-default-notes-file "~/workspace/org/programming/notes.org")
+     (setq org-export-html-postamble-format 
+           '(("en" "<p class=\"date\">Date: %d</p>")))
+     (setq org-export-html-date-format-string "%A %d %B %Y")
    #+END_SRC
 ** Keybindings
    #+BEGIN_SRC emacs-lisp
