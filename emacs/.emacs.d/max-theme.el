@@ -115,7 +115,7 @@
    `(magit-diff-file-header ((,class (:foreground ,fg2 :background ,bg3))))
    `(magit-diffstat-added ((,class (:foreground ,type))))
    `(magit-diffstat-removed ((,class (:foreground ,var))))
-   `(magit-hash ((,class (:foreground ,fg2))))
+   `(magit-hash ((,class (:foreground ,fg4))))
    `(magit-hunk-heading ((,class (:background ,bg3))))
    `(magit-hunk-heading-highlight ((,class (:background ,bg3))))
    `(magit-item-highlight ((,class :background ,bg3)))
