@@ -54,7 +54,7 @@
 			   sudo-edit
 			   try
 			   wakatime-mode
-			   molokai-theme)
+                           danneskjold-theme)
       "Default packages")
   #+END_SRC
 
@@ -74,6 +74,15 @@
 	  (package-install pkg))))
   #+END_SRC
 
+** Internal Packages
+   #+BEGIN_SRC emacs-lisp
+     (defvar max/vendor-dir (expand-file-name "vendor" user-emacs-directory))
+     (add-to-list 'load-path max/vendor-dir)
+
+     (dolist (project (directory-files max/vendor-dir t "\\w+"))
+       (when (file-directory-p project)
+         (add-to-list 'load-path project)))
+   #+END_SRC
 * OS Tools
 ** Environment
   #+BEGIN_SRC emacs-lisp
@@ -145,20 +154,10 @@
    #+END_SRC
    
 * Keybindings
-** General
-  #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-+") 'text-scale-increase)
-    (global-set-key (kbd "C--") 'text-scale-decrease)
-  #+END_SRC
-
-** Magit
-  #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-x i") 'magit-status)
-  #+END_SRC
-** Programs
-  #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-c C-k") 'compile)
-  #+END_SRC
+** E-Mail
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-x r") 'mu4e)
+   #+END_SRC
 
 ** Expansion
   #+BEGIN_SRC emacs-lisp
@@ -171,12 +170,25 @@
     (define-key company-active-map (kbd "<tab>") 'company-complete)
   #+END_SRC
 
-** Programming
+** General
   #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "RET") 'newline-and-indent)
-    (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
+    (global-set-key (kbd "C-+") 'text-scale-increase)
+    (global-set-key (kbd "C--") 'text-scale-decrease)
   #+END_SRC
 
+** Ivy
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+   #+END_SRC
+
+** Magit
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-x i") 'magit-status)
+  #+END_SRC
+** Multiple Cursors
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+   #+END_SRC
 ** Org
    #+BEGIN_SRC emacs-lisp
      (bind-key "C-c p" 'org-capture)
@@ -185,21 +197,22 @@
                      (lambda () (interactive) (find-file org-default-notes-file)))
    #+END_SRC
 
-** Ivy
-   #+BEGIN_SRC emacs-lisp
-     (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
-   #+END_SRC
+** Programming
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "RET") 'newline-and-indent)
+    (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
+  #+END_SRC
+
+** Programs
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-c C-k") 'compile)
+  #+END_SRC
 
 ** Swiper
    #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-s") 'swiper)
      (global-set-key (kbd "C-r") 'swiper)
      (global-set-key (kbd "C-c C-r") 'ivy-resume)
-   #+END_SRC
-
-** Multiple Cursors
-   #+BEGIN_SRC emacs-lisp
-     (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
    #+END_SRC
 
 * Org Mode
@@ -252,6 +265,7 @@
 * Editing Text
 ** Brackets
    #+BEGIN_SRC emacs-lisp
+     (rainbow-delimiters-mode)
      (electric-pair-mode)
      (setq show-paren-delay 0)
      (show-paren-mode 1)
@@ -260,12 +274,14 @@
 ** Line Numbers
    #+BEGIN_SRC emacs-lisp
      (require 'nlinum-relative)
+     (setq nlinum-format "%d ")
      (setq nlinum-relative-redisplay-delay 0)
-;;     (face-remap-add-relative 'nlinum-relative-current-face 'my/nlinum-relative-highlight)
-
-;;     (setq nlinum-relative-current-symbol "->")
+     (setq nlinum-highlight-current-line t)
      (add-hook 'prog-mode-hook 'nlinum-relative-mode)
    #+END_SRC
+
+   #+RESULTS:
+   | highlight-indentation-mode | nlinum-relative-mode |
 
 ** Auto Complete
    #+BEGIN_SRC emacs-lisp
@@ -440,5 +456,5 @@
    #+END_SRC
 * Themes
   #+BEGIN_SRC emacs-lisp
-    (load-theme 'molokai t)
+    (load-theme 'max t)
   #+END_SRC
