@@ -1,4 +1,4 @@
-#+TITLE: Max Ungless Emacs Configuration
+#+TITLE: Max Ungless' Emacs Configuration
 
 * General configuration
 ** User Settings
@@ -53,8 +53,7 @@
 			   ein
 			   sudo-edit
 			   try
-			   wakatime-mode
-                           danneskjold-theme)
+			   wakatime-mode)
       "Default packages")
   #+END_SRC
 
@@ -74,15 +73,6 @@
 	  (package-install pkg))))
   #+END_SRC
 
-** Internal Packages
-   #+BEGIN_SRC emacs-lisp
-     (defvar max/vendor-dir (expand-file-name "vendor" user-emacs-directory))
-     (add-to-list 'load-path max/vendor-dir)
-
-     (dolist (project (directory-files max/vendor-dir t "\\w+"))
-       (when (file-directory-p project)
-         (add-to-list 'load-path project)))
-   #+END_SRC
 * OS Tools
 ** Environment
   #+BEGIN_SRC emacs-lisp
@@ -91,13 +81,11 @@
     (exec-path-from-shell-copy-env "PATH")
     (add-to-list 'exec-path (concat (getenv "GOPATH") "/bin"))
   #+END_SRC
-
-* Emacs
+* Emacs GUI
 ** Startup
    #+BEGIN_SRC emacs-lisp
      (setq inhibit-startup-message t)
    #+END_SRC
-
 ** Window
    #+BEGIN_SRC emacs-lisp
      (setq frame-title-format '("GNU Emacs " emacs-version))
@@ -109,29 +97,19 @@
    #+BEGIN_SRC emacs-lisp
      (fset 'yes-or-no-p 'y-or-n-p)
    #+END_SRC
-
 ** Highlighting Line
    #+BEGIN_SRC emacs-lisp
      (global-hl-line-mode)
    #+END_SRC
-
 ** Backup
    #+BEGIN_SRC emacs-lisp
      (setq make-backup-files nil)
    #+END_SRC
-
-** Indentation
-  #+BEGIN_SRC emacs-lisp
-    (setq-default indent-tabs-mode nil)
-    (setq indent-tabs-mode nil)
-  #+END_SRC
-
 ** Fonts
    #+BEGIN_SRC emacs-lisp
      (when (window-system)
        (set-default-font "Iosevka"))
    #+END_SRC
-
 ** Telephone Line
    #+BEGIN_SRC emacs-lisp
      (require 'telephone-line)
@@ -143,7 +121,6 @@
          telephone-line-evil-use-short-tag t)
      (telephone-line-mode 1)
     #+END_SRC
-
 ** Smooth scrolling
    #+BEGIN_SRC emacs-lisp
     (setq redisplay-dont-pause t
@@ -152,7 +129,6 @@
           scroll-conservatively 10000
           scroll-preserve-screen-position 1)
    #+END_SRC
-   
 * Keybindings
 ** E-Mail
    #+BEGIN_SRC emacs-lisp
@@ -262,7 +238,96 @@
           smtpmail-smtp-service 587
           smtpmail-debug-info t)
   #+END_SRC
-* Editing Text
+* Programming
+** Expansion
+*** YASnippets
+  #+BEGIN_SRC emacs-lisp
+    (require 'yasnippet)
+    (yas-reload-all)
+    (add-hook 'js-mode-hook 'yas-minor-mode)
+    (add-hook 'sgml-mode-hook 'yas-minor-mode)
+    (add-hook 'go-mode-hook 'yas-minor-mode)
+  #+END_SRC
+*** Emmet
+   #+BEGIN_SRC emacs-lisp
+     (require 'emmet-mode)
+     (add-hook 'sgml-mode-hook 'emmet-mode)
+     (add-hook 'css-mode-hook  'emmet-mode)
+     (add-hook 'scss-mode-hook  'emmet-mode)
+     (setq emmet-move-cursor-between-quotes t)
+   #+END_SRC
+*** Hippie Expand
+   #+BEGIN_SRC emacs-lisp
+     (require 'hippie-exp)
+     (setq-default hippie-expand-try-functions-list
+                   '(yas-expand emmet-expand-line))
+   #+END_SRC
+** Syntax Checking
+   #+BEGIN_SRC emacs-lisp
+     (require 'flycheck)
+     (global-flycheck-mode)
+   #+END_SRC
+** Highlighting Indentation Levels
+   #+BEGIN_SRC emacs-lisp
+;     (require 'highlight-indentation)
+;     (add-hook 'prog-mode-hook 'highlight-indentation-mode)
+   #+END_SRC
+** Minor Modes
+*** Config Mode
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.gitconfig$" . conf-mode))
+   #+END_SRC
+*** Web Mode
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
+     (add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
+   #+END_SRC
+*** YAML
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+     (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+   #+END_SRC
+*** CoffeeScript
+   #+BEGIN_SRC emacs-lisp
+     (defun coffee-custom ()
+       "coffee-mode-hook"
+       (make-local-variable 'tab-width)
+       (set 'tab-width 2))
+
+     (add-hook 'coffee-mode-hook 'coffee-custom)
+   #+END_SRC
+*** Markdown
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+     (add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
+     (add-hook 'markdown-mode-hook
+               (lambda ()
+                 (visual-line-mode t)
+                 (writegood-mode t)
+                 (flyspell-mode t)))
+   #+END_SRC
+*** Go
+   #+BEGIN_SRC emacs-lisp
+     (require 'go-autocomplete)
+
+     (add-hook 'go-mode-hook
+               (lambda ()
+                 (go-eldoc-setup)
+                 (add-hook 'before-save-hook 'gofmt-before-save)))
+   #+END_SRC
+*** Python
+   #+BEGIN_SRC emacs-lisp
+     (require 'elpy)
+     (elpy-enable)
+
+     (require 'py-autopep8)
+     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+   #+END_SRC
+*** SCSS
+   #+BEGIN_SRC emacs-lisp
+     (autoload 'scss-mode "scss-mode")
+     (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+   #+END_SRC
 ** Brackets
    #+BEGIN_SRC emacs-lisp
      (rainbow-delimiters-mode)
@@ -280,10 +345,7 @@
      (add-hook 'prog-mode-hook 'nlinum-relative-mode)
    #+END_SRC
 
-   #+RESULTS:
-   | highlight-indentation-mode | nlinum-relative-mode |
-
-** Auto Complete
+** Company
    #+BEGIN_SRC emacs-lisp
      (require 'company)
      (add-hook 'after-init-hook #'global-company-mode)
@@ -337,97 +399,10 @@
      (global-set-key (kbd "C-c n") 'cleanup-buffer)
 
      (setq-default show-trailing-whitespace t)
+     (setq-default indent-tabs-mode nil)
+     (setq indent-tabs-mode nil)
    #+END_SRC
-* Expanding
-** YASnippets
-  #+BEGIN_SRC emacs-lisp
-    (require 'yasnippet)
-    (yas-reload-all)
-    (add-hook 'js-mode-hook 'yas-minor-mode)
-    (add-hook 'sgml-mode-hook 'yas-minor-mode)
-    (add-hook 'go-mode-hook 'yas-minor-mode)
-  #+END_SRC
-** Emmet
-   #+BEGIN_SRC emacs-lisp
-     (require 'emmet-mode)
-     (add-hook 'sgml-mode-hook 'emmet-mode)
-     (add-hook 'css-mode-hook  'emmet-mode)
-     (add-hook 'scss-mode-hook  'emmet-mode)
-     (setq emmet-move-cursor-between-quotes t)
-   #+END_SRC
-** Hippie Expand
-   #+BEGIN_SRC emacs-lisp
-     (require 'hippie-exp)
-     (setq-default hippie-expand-try-functions-list
-                   '(yas-expand emmet-expand-line))
-   #+END_SRC
-* Editing Code
-** Syntax Checking
-   #+BEGIN_SRC emacs-lisp
-     (require 'flycheck)
-     (global-flycheck-mode)
-   #+END_SRC
-** Highlighting Indentation Levels
-   #+BEGIN_SRC emacs-lisp
-     (require 'highlight-indentation)
-     (add-hook 'prog-mode-hook 'highlight-indentation-mode)
-   #+END_SRC
-** Config Mode
-   #+BEGIN_SRC emacs-lisp
-     (add-to-list 'auto-mode-alist '("\\.gitconfig$" . conf-mode))
-   #+END_SRC
-** Web Mode
-   #+BEGIN_SRC emacs-lisp
-     (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
-     (add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
-   #+END_SRC
-** YAML
-   #+BEGIN_SRC emacs-lisp
-     (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
-     (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-   #+END_SRC
-** CoffeeScript
-   #+BEGIN_SRC emacs-lisp
-     (defun coffee-custom ()
-       "coffee-mode-hook"
-       (make-local-variable 'tab-width)
-       (set 'tab-width 2))
-
-     (add-hook 'coffee-mode-hook 'coffee-custom)
-   #+END_SRC
-** Markdown
-   #+BEGIN_SRC emacs-lisp
-     (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-     (add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
-     (add-hook 'markdown-mode-hook
-               (lambda ()
-                 (visual-line-mode t)
-                 (writegood-mode t)
-                 (flyspell-mode t)))
-   #+END_SRC
-** Go
-   #+BEGIN_SRC emacs-lisp
-     (require 'go-autocomplete)
-
-     (add-hook 'go-mode-hook
-               (lambda ()
-                 (go-eldoc-setup)
-                 (add-hook 'before-save-hook 'gofmt-before-save)))
-   #+END_SRC
-** Python
-   #+BEGIN_SRC emacs-lisp
-     (require 'elpy)
-     (elpy-enable)
-
-     (require 'py-autopep8)
-     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-   #+END_SRC
-** SCSS
-   #+BEGIN_SRC emacs-lisp
-     (autoload 'scss-mode "scss-mode")
-     (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
-   #+END_SRC
-* Writing English
+* Other Text Editing
 ** Writeroom Mode
    #+BEGIN_SRC emacs-lisp
      (require 'writeroom-mode)
