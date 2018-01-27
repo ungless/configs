@@ -50,7 +50,7 @@
       (colour-1 "#5c374c")
       (colour-2 "#006989")
       (colour-3 "#ff8c61")
-      (colour-4 "#faa275")
+      (colour-4 "#ff7700")
       (colour-5 "#ce6a85")
       (colour-6 "#374a67")
       (colour-7 "#616283")

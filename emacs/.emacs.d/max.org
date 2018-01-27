@@ -2,13 +2,13 @@
 
 * General configuration
 ** User Settings
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (setq user-full-name "Max Ungless")
     (setq user-mail-address "max@maxungless.com")
-  #+END_SRC
+   #+END_SRC
 * Packages
 ** Package Repositories
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (load "package")
     (package-initialize)
     (add-to-list 'package-archives
@@ -17,70 +17,72 @@
                  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
     (setq package-archive-enable-alist '(("melpa" deft magit)))
-  #+END_SRC
+   #+END_SRC
 
 ** Package List
-  #+BEGIN_SRC emacs-lisp
-    (defvar max/packages '(exec-path-from-shell
-			   telephone-line
-			   magit
-			   ivy
-			   swiper
-			   multiple-cursors
-			   marmalade
-			   org-bullets
-			   autopair
-			   yasnippet
-			   emmet-mode
-			   nlinum-relative
-                           rainbow-delimiters
-			   writegood-mode
-			   writeroom-mode
-			   spray
-			   flycheck
-			   conf-mode
-			   web-mode
-			   yaml-mode
-			   coffee-mode
-			   markdown-mode
-			   go-mode
-			   go-autocomplete
-			   go-errcheck
-			   go-eldoc
-			   elpy
-			   py-autopep8
-			   scss-mode
-			   ein
-			   sudo-edit
-			   try
-			   wakatime-mode)
-      "Default packages")
-  #+END_SRC
+   #+BEGIN_SRC emacs-lisp
+              (defvar max/packages '(autopair
+                                     coffee-mode
+                                     company
+                                     company-quickhelp
+                                     company-statistics
+                                     conf-mode
+                                     ein
+                                     elpy
+                                     emmet-mode
+                                     flycheck
+                                     go-autocomplete
+                                     go-eldoc
+                                     go-errcheck
+                                     go-mode
+                                     ivy
+                                     magit
+                                     markdown-mode
+                                     marmalade
+                                     multiple-cursors
+                                     nlinum-relative
+                                     org-bullets
+                                     py-autopep8
+                                     rainbow-delimiters
+                                     spray
+                                     sudo-edit
+                                     swiper
+                                     telephone-line
+                                     try
+                                     wakatime-mode
+                                     web-mode
+                                     writegood-mode
+                                     writeroom-mode
+                                     yaml-mode
+                                     yasnippet
+                                     exec-path-from-shell)
+                "Default packages")
+   #+END_SRC
 
 ** Install Package List
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (require 'cl)
     (defun max/packages-installed-p ()
       (loop for pkg in max/packages
-	    when (not (package-installed-p pkg)) do (return nil)
-	    finally (return t)))
+            when (not (package-installed-p pkg)) do (return nil)
+            finally (return t)))
 
     (unless (max/packages-installed-p)
       (message "%s" "Refreshing package database...")
       (package-refresh-contents)
       (dolist (pkg max/packages)
-	(when (not (package-installed-p pkg))
-	  (package-install pkg))))
-  #+END_SRC
+        (when (not (package-installed-p pkg))
+          (package-install pkg))))
+   #+END_SRC
 
 * OS Tools
 ** Environment
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (require 'exec-path-from-shell)
     (exec-path-from-shell-copy-env "GOPATH")
     (exec-path-from-shell-copy-env "PATH")
     (add-to-list 'exec-path (concat (getenv "GOPATH") "/bin"))
-  #+END_SRC
+   #+END_SRC
 * Emacs GUI
 ** Startup
    #+BEGIN_SRC emacs-lisp
@@ -120,7 +122,7 @@
      (setq telephone-line-height 24
          telephone-line-evil-use-short-tag t)
      (telephone-line-mode 1)
-    #+END_SRC
+   #+END_SRC
 ** Smooth scrolling
    #+BEGIN_SRC emacs-lisp
     (setq redisplay-dont-pause t
@@ -136,7 +138,7 @@
    #+END_SRC
 
 ** Expansion
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (require 'company)
     (global-set-key (kbd "C-<tab>") 'hippie-expand)
     (global-set-key (kbd "C-.") 'company-complete)
@@ -144,13 +146,13 @@
     (define-key company-active-map (kbd "C-n") 'company-select-next)
     (define-key company-active-map (kbd "C-p") 'company-select-previous)
     (define-key company-active-map (kbd "<tab>") 'company-complete)
-  #+END_SRC
+   #+END_SRC
 
 ** General
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-+") 'text-scale-increase)
     (global-set-key (kbd "C--") 'text-scale-decrease)
-  #+END_SRC
+   #+END_SRC
 
 ** Ivy
    #+BEGIN_SRC emacs-lisp
@@ -158,31 +160,31 @@
    #+END_SRC
 
 ** Magit
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-x i") 'magit-status)
-  #+END_SRC
+   #+END_SRC
 ** Multiple Cursors
    #+BEGIN_SRC emacs-lisp
      (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
    #+END_SRC
 ** Org
    #+BEGIN_SRC emacs-lisp
-     (bind-key "C-c p" 'org-capture)
-     (bind-key "C-c a" 'org-agenda)
+     (global-set-key (kbd "C-c p") 'org-capture)
+     (global-set-key (kbd "C-c a") 'org-agenda)
      (global-set-key (kbd "C-c o")
                      (lambda () (interactive) (find-file org-default-notes-file)))
    #+END_SRC
 
 ** Programming
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "RET") 'newline-and-indent)
     (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
-  #+END_SRC
+   #+END_SRC
 
 ** Programs
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-c C-k") 'compile)
-  #+END_SRC
+   #+END_SRC
 
 ** Swiper
    #+BEGIN_SRC emacs-lisp
@@ -193,7 +195,7 @@
 
 * Org Mode
 ** Packages
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
     (require 'org)
     (require 'org-bullets)
     (require 'flyspell)
@@ -204,15 +206,15 @@
     (add-hook 'org-mode-hook
               (lambda ()
                 (writegood-mode)))
-  #+END_SRC
+   #+END_SRC
 ** Configurations
-  #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp
      (setq org-directory "~/workspace/org/")
      (setq org-default-notes-file "~/workspace/org/programming/notes.org")
      (setq org-export-html-postamble-format
            '(("en" "<p class=\"date\">Date: %d</p>")))
      (setq org-export-html-date-format-string "%A %d %B %Y")
-  #+END_SRC
+   #+END_SRC
 * ERC
   #+BEGIN_SRC emacs-lisp
 
@@ -241,27 +243,27 @@
 * Programming
 ** Expansion
 *** YASnippets
-  #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
     (require 'yasnippet)
     (yas-reload-all)
     (add-hook 'js-mode-hook 'yas-minor-mode)
     (add-hook 'sgml-mode-hook 'yas-minor-mode)
     (add-hook 'go-mode-hook 'yas-minor-mode)
-  #+END_SRC
+    #+END_SRC
 *** Emmet
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (require 'emmet-mode)
      (add-hook 'sgml-mode-hook 'emmet-mode)
      (add-hook 'css-mode-hook  'emmet-mode)
      (add-hook 'scss-mode-hook  'emmet-mode)
      (setq emmet-move-cursor-between-quotes t)
-   #+END_SRC
+    #+END_SRC
 *** Hippie Expand
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (require 'hippie-exp)
      (setq-default hippie-expand-try-functions-list
                    '(yas-expand emmet-expand-line))
-   #+END_SRC
+    #+END_SRC
 ** Syntax Checking
    #+BEGIN_SRC emacs-lisp
      (require 'flycheck)
@@ -274,30 +276,30 @@
    #+END_SRC
 ** Minor Modes
 *** Config Mode
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (add-to-list 'auto-mode-alist '("\\.gitconfig$" . conf-mode))
-   #+END_SRC
+    #+END_SRC
 *** Web Mode
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
      (add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
-   #+END_SRC
+    #+END_SRC
 *** YAML
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
      (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
-   #+END_SRC
+    #+END_SRC
 *** CoffeeScript
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (defun coffee-custom ()
        "coffee-mode-hook"
        (make-local-variable 'tab-width)
        (set 'tab-width 2))
 
      (add-hook 'coffee-mode-hook 'coffee-custom)
-   #+END_SRC
+    #+END_SRC
 *** Markdown
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
      (add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
      (add-hook 'markdown-mode-hook
@@ -305,29 +307,29 @@
                  (visual-line-mode t)
                  (writegood-mode t)
                  (flyspell-mode t)))
-   #+END_SRC
+    #+END_SRC
 *** Go
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (require 'go-autocomplete)
 
      (add-hook 'go-mode-hook
                (lambda ()
                  (go-eldoc-setup)
                  (add-hook 'before-save-hook 'gofmt-before-save)))
-   #+END_SRC
+    #+END_SRC
 *** Python
-   #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp
      (require 'elpy)
      (elpy-enable)
 
      (require 'py-autopep8)
      (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-   #+END_SRC
+    #+END_SRC
 *** SCSS
-   #+BEGIN_SRC emacs-lisp
-     (autoload 'scss-mode "scss-mode")
-     (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
-   #+END_SRC
+    #+BEGIN_SRC emacs-lisp
+      (add-to-list 'auto-mode-alist '("\\.scss\\'" . css-mode))
+    #+END_SRC
+
 ** Brackets
    #+BEGIN_SRC emacs-lisp
      (rainbow-delimiters-mode)
