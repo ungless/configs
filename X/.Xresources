@@ -11,10 +11,14 @@ URxvt*letterSpace:        -1
 URxvt.depth: 32
 !URxvt.background:	[95]#fef1ce
 
-URxvt.font: xft:Iosevka:size=11,style=regular
-URxvt.boldFont: xft:Iosevka:size=11,style=bold
-URxvt.italicFont: xft:Iosevka:pixelsize=11,style=bold
-URxvt.boldItalicFont: xft:Iosevka:pixelsize=11,style=bold
+URxvt.font: xft:Mononoki:size=11,style=regular
+URxvt.boldFont: xft:Mononoki:size=11,style=bold
+URxvt.italicFont: xft:Mononoki:pixelsize=11,style=bold
+URxvt.boldItalicFont: xft:Mononoki:pixelsize=11,style=bold
+
+URxvt.keysym.Control-Shift-Y: perl:clipboard:paste
+URxvt.iso14755: False
+URxvt.perl-ext-common: default,clipboard
 
 ! B E T A M A X
 ! svbtext 2016
@@ -138,7 +142,7 @@ rofi.separator-style:   solid
 rofi.padding:           50
 rofi.hide-scrollbar:    true
 rofi.line-margin:       0
-rofi.font:              Iosevka 15
+rofi.font:              Roboto 15
 rofi.show-icons:        true
 
 rofi.color-enabled: true
