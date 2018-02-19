@@ -22,12 +22,14 @@ home=$HOME
 workspace=$home/workspace
 
 # VARIABLES
-export EDITOR='emacs'
+export EDITOR='emacsclient -c'
 export WORKSPACE=$workspace
 export GOPATH=$workspace/programming/go
 export GOBIN=$GOPATH/bin
 
 export PATH=$HOME/.gem/ruby/2.4.0/bin:$GOBIN:$PATH
+
+LD_PRELOAD='./libcxxrt.so:/usr/$LIB/libstdc++.so.6'
 
 # ALIASES
 alias zshreload="source ~/.zshrc"
