@@ -91,10 +91,14 @@
 ** Window
    #+BEGIN_SRC emacs-lisp
      (setq frame-title-format '("GNU Emacs " emacs-version))
+     (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
      (scroll-bar-mode -1)
      (tool-bar-mode -1)
      (menu-bar-mode -1)
    #+END_SRC
+
+   #+RESULTS:
+
 ** Yes No Dialog
    #+BEGIN_SRC emacs-lisp
      (fset 'yes-or-no-p 'y-or-n-p)
@@ -109,8 +113,9 @@
    #+END_SRC
 ** Fonts
    #+BEGIN_SRC emacs-lisp
+     (add-to-list 'default-frame-alist '(font . "Mononoki-11"))
      (when (window-system)
-       (set-default-font "Iosevka"))
+       (set-default-font "Mononoki"))
    #+END_SRC
 ** Telephone Line
    #+BEGIN_SRC emacs-lisp
