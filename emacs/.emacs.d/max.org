@@ -27,6 +27,7 @@
                                      company-quickhelp
                                      company-statistics
                                      conf-mode
+                                     dashboard
                                      ein
                                      elpy
                                      emmet-mode
@@ -36,6 +37,7 @@
                                      go-errcheck
                                      go-mode
                                      ivy
+                                     paganini-theme
                                      magit
                                      markdown-mode
                                      marmalade
@@ -44,6 +46,7 @@
                                      org-bullets
                                      py-autopep8
                                      rainbow-delimiters
+                                     solarized-theme
                                      spray
                                      sudo-edit
                                      swiper
@@ -87,7 +90,18 @@
 ** Startup
    #+BEGIN_SRC emacs-lisp
      (setq inhibit-startup-message t)
+     (require 'dashboard)
+     (dashboard-setup-startup-hook)
+     (setq dashboard-banner-logo-title (format-time-string "%A, %d %B %Y"))
+     (setq dashboard-startup-banner '3)
+     (setq dashboard-items '((recents  . 5)
+                             (projects . 5)
+                             (agenda . 5)))
+     (define-key dashboard-mode-map (kbd "<RET>") 'widget-button-press)
+     ;;     (setq initial-buffer-choice "~/workspace/org/programming/projects.org")
+          ;;(add-hook 'after-init-hook (lambda () (find-file "~/workspace/org/programming/projects.org")))
    #+END_SRC
+
 ** Window
    #+BEGIN_SRC emacs-lisp
      (setq frame-title-format '("GNU Emacs " emacs-version))
@@ -438,5 +452,5 @@
    #+END_SRC
 * Themes
   #+BEGIN_SRC emacs-lisp
-    (load-theme 'max t)
+    (load-theme 'solarized-light t)
   #+END_SRC

@@ -1,5 +1,4 @@
 ;;; max-theme.el --- max-theme
-
 ;; Copyright (C) 2018 by Max Ungless
 
 ;; Author: Max Ungless <maxungless@gmail.com>
@@ -27,24 +26,24 @@
 
 (let ((class '((class color) (min-colors 89)))
       (fg1 "#1a0e0a")
-      (fg2 "#eae9e8")
-      (fg3 "#548687")
+      (fg2 "#b26e63")
+      (fg3 "#b0bc98")
       (fg4 "#6b6b6c")
       (textbg "#e3d9cc")
-      (bg1 "#f3e9dc")
+      (bg1 "#faf1dd")
       (bg2 "#e7cfc0")
       (bg3 "#bfab9b")
       (bg4 "#eaebed")
       (bg5 "#44475a")
       (key2 "#0189cc")
       (key3 "#ff79c6")
-      (builtin "#895737")
-      (keyword "#287d6a")
+      (type "#0a2463")
+      (builtin "#587b7f")
+      (keyword "#4b93b1")
       (const   "#a72608")
-      (comment "#AAB987")
-      (func    "#a67f8e")
-      (str     "#4b4237")
-      (type    "#5e0b15")
+      (comment "#820263")
+      (func    "#b88333")
+      (str     "#337357")
       (var     "#bc8034")
       (warning "#ffb86c")
       (colour-1 "#5c374c")
@@ -85,15 +84,15 @@
 
     ;; syntax
    `(font-lock-builtin-face ((,class (:foreground ,builtin :background ,textbg))))
-   `(font-lock-comment-face ((,class (:foreground ,comment))))
+   `(font-lock-comment-face ((,class (:slant italic :foreground ,comment))))
    `(font-lock-constant-face ((,class (:foreground ,const :background ,textbg))))
    `(font-lock-doc-face ((,class (:foreground ,comment :background ,textbg))))
-   `(font-lock-function-name-face ((,class (:foreground ,func :bold t :background ,textbg :box 1))))
+   `(font-lock-function-name-face ((,class (:foreground ,func :bold t))))
    `(font-lock-keyword-face ((,class (:bold ,class :foreground ,keyword :background ,textbg))))
    `(font-lock-negation-char-face ((,class (:foreground ,const :background ,textbg))))
    `(font-lock-reference-face ((,class (:foreground ,const :background ,textbg))))
-   `(font-lock-string-face ((,class (:foreground ,str :background ,textbg))))
-   `(font-lock-type-face ((,class (:slant italic :foreground ,fg3))))
+   `(font-lock-string-face ((,class (:foreground ,str))))
+   `(font-lock-type-face ((,class (:foreground ,type))))
    `(font-lock-variable-name-face ((,class (:foreground ,var :background ,textbg))))
    `(font-lock-warning-face ((,class (:foreground ,warning))))
 
