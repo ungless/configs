@@ -3,7 +3,7 @@ background = #231f20
 background-alt = #efefef
 foreground = #ece2d0
 foreground-alt = #250902
-primary = #fcec52
+primary = #f0cea0
 
 [global/wm]
 margin-top = 5
@@ -11,10 +11,10 @@ margin-bottom = 5
 
 [bar/main]
 monitor = ${env:MONITOR}
+height = 38
 width = 100%
-height = 32
-offset-x = 1%
-offset-y = 1%
+offset-x = 0%
+offset-y = 0%
 radius = 0
 fixed-center = true
 
@@ -22,18 +22,18 @@ foreground = ${colors.foreground-alt}
 background = ${colors.background}
 
 module-margin-left = 0
-module-margin-right = 2
+module-margin-right = 1
 
 font-0 = Mononoki:size=12;2
 font-1 = Font Awesome:size=12;2
 font-2 = sans:size=11:antialias=false;2
 
 modules-left = i3
-modules-right = wlan cpu volume date time
+modules-right = wlan cpu volume date time day
 
-border-top = 7
-border-right = 30
-border-left = 30
+border-top = 0
+border-right = 0
+border-left = 0
 border-bottom = 5
 border-color = #00000000
 
@@ -58,45 +58,42 @@ scroll-down = i3-deskprev
 type = internal/i3
 
 pin-workspaces = true
-strip-wsnumbers = true
 
 index-sort = true
 enable-click = true
 enable-scroll = true
-wrapping-scroll = false
 reverse-scroll = true
 
-fuzzy-match = true
+; ws-icon-0 = I;1
+; ws-icon-1 = II;2
+; ws-icon-2 = III;3
+; ws-icon-3 = IV;4
+; ws-icon-4 = V;5
+; ws-icon-5 = VI;6
+; ws-icon-6 = VII;7
+; ws-icon-7 = VIII
+; ws-icon-8 = IX
+; ws-icon-9 = X
 
-ws-icon-0 = 1;I
-ws-icon-1 = 2;II
-ws-icon-2 = 3;III
-ws-icon-3 = 4;IV
-ws-icon-4 = 5;V
-ws-icon-5 = 6;VI
-ws-icon-6 = 7;VII
-ws-icon-7 = 8;VIII
-ws-icon-8 = 9;IX
-ws-icon-9 = 10;X
-
-label-unfocused = %icon%
+label-unfocused = %name%
 label-unfocused-background = ${colors.background}
 label-unfocused-foreground = ${colors.foreground}
-label-unfocused-padding = 2
+label-unfocused-padding = 1
 
-label-visible = %icon%
+label-visible = %name%
 label-visible-background = ${colors.primary}
 label-visible-foreground = ${colors.foreground-alt}
-label-visible-padding = 2
+label-visible-padding = 1
 
-label-focused = %icon%
+label-focused = %name%
 label-focused-background = ${colors.primary}
 label-focused-foreground = ${colors.foreground-alt}
-label-focused-padding = 2
+label-focused-padding = 1
 
-label-urgent = %icon%
-label-urgent-foreground = ${colors.foreground}
-label-urgent-background = ${colors.primary}
+label-urgent = %name%
+label-urgent-foreground = ${colors.primary}
+label-urgent-background = ${colors.foreground-alt}
+label-urgent-padding = 1
 
 [module/cpu]
 type = internal/cpu
@@ -160,11 +157,13 @@ label-foreground = ${colors.primary}
 
 [module/day]
 type = custom/script
-exec = echo "#"$(( ($(date +%s) - $(date +%s -ud '2016-05-19 00:00:00')) / 3600 / 24 ))
+exec = echo $(( ($(date +%s) - $(date +%s -ud '2016-05-19 00:00:00')) / 3600 / 24 ))
 interval = 60
-format = <label>
-format-background = #95304D6D
-format-padding = 3
+label = " %output% "
+format-prefix = " # "
+format-prefix-background = ${colors.background-alt}
+format-prefix-foreground = ${colors.foreground-alt}
+format-foreground = ${colors.primary}
 
 [module/backlight]
 type = internal/backlight
