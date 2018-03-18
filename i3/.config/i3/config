@@ -7,64 +7,66 @@ set $down n
 set $up e
 set $right i
 
-set $focused_background #6e8894
-set $unfocused_background #ece2d0
-set $focused_border #6e8894
-set $unfocused_border #191919
-set $text_color #efefef
-set $unfocused_text #816964
+set $background1 #180a01
+set $background2 #bd632f
+set $background3 #f58f29
+set $border1 #191919
+set $border2 #bd632f
+set $text1 #ffd800
+set $text2 #efd594
+set $text3 #6d6d6d
 set $indicator #fff
 set $urgent_border #fff
-set $urgent_background #fff
 
 set $focused
 set $unfocused
 set $text
 set $urgent
 
-set $borders 2
+set $borders 3
 
-set $wallpaper $HOME/Pictures/seagull.jpg
+set $wallpaper $HOME/Pictures/arch.png
 
 set $primary-display DisplayPort-0
 set $secondary-display DVI-0
 
-# set $ws1 "I"
-# set $ws2 "II"
-# set $ws3 "III"
-# set $ws4 "IV"
-# set $ws5 "V"
-# set $ws6 "VI"
-# set $ws7 "VII"
-# set $ws8 "VIII"
-# set $ws9 "IX"
-# set $ws10 "X"
+set $ws1 "I"
+set $ws2 "II"
+set $ws3 "III"
+set $ws4 "IV"
+set $ws5 "V"
+set $ws6 "VI"
+set $ws7 "VII"
+set $ws8 "VIII"
+set $ws9 "IX"
+set $ws10 "X"
 
-set $ws1 1
-set $ws2 2
-set $ws3 3
-set $ws4 4
-set $ws5 5
-set $ws6 6
-set $ws7 7
-set $ws8 8
-set $ws9 9
-set $ws10 10
+# set $ws1 1
+# set $ws2 2
+# set $ws3 3
+# set $ws4 4
+# set $ws5 5
+# set $ws6 6
+# set $ws7 7
+# set $ws8 8
+# set $ws9 9
+# set $ws10 10
 
 
 # = # = # Fonts # = # = #
-font pango:Mononoki 9
+font pango:Rancho 12
 
 # = # = # Key bindings # = # = #
 bindsym $mod+Return exec $terminal
+bindsym $mod+Shift+t exec emacs
 bindsym $mod+t exec emacsclient -c
 bindsym $mod+p exec firefox
 bindsym $mod+Shift+p exec firefox --private-window
 bindsym Print exec scrot '%Y-%m-%d.png' -e 'mv $f ~/Pictures/Screenshots/'
 
 bindsym $mod+Shift+q kill
-#bindsym $mod+d exec --no-startup-id  rofi -show drun -modi drun
-bindsym $mod+d exec --no-startup-id dmenu
+bindsym $mod+d exec --no-startup-id  rofi -show drun -modi drun
+#bindsym $mod+d exec --no-startup-id dmenu
 bindsym $mod+a focus parent
 
 # = Window Focus = #
@@ -199,24 +201,47 @@ bindsym $mod+r mode "resize"
 bindsym $mod+Shift+Tab mode "$mode_system"
 
 # = # = # Colours # = # = #
-client.focused           $focused_border   $focused_background   $text_color   $indicator
-client.unfocused         $unfocused_border   $unfocused_background   $unfocused_text   $indicator
-client.urgent            $urgent_border   $urgent_background  $urgent_text   $indicator
+client.focused           $background3   $background3   $text2   $indicator
+client.unfocused         $background1   $background1   $text3  $indicator
+client.focused_inactive  $background1   $background1   $text3  $indicator
+client.urgent            $urgent_border   $background3  $urgent_text   $indicator
 
 # = # = # Bar # = # = #
+# bar {
+#     i3bar_command $HOME/.config/polybar/start.sh
+# }
+
 bar {
-    i3bar_command $HOME/.config/polybar/start.sh
+    status_command i3status -c $HOME/.config/i3/i3status.conf
+    height 30
+    tray_padding 10
+    font pango:Rancho 12
+    separator_symbol " ⬙ "
+    position top
+
+    colors {
+           background $background1
+           statusline $text1
+           separator $text3
+
+           focused_workspace  $border2 $background2 $text2
+           active_workspace   $border1 $background1 $text2
+           inactive_workspace $border1 $background1 $text3
+           urgent_workspace   $border1 $background3 $text1
+           binding_mode       $border1 $background3 $text1
+    }
 }
 
 # = # = # Gaps # = # = #
-gaps inner 5
+gaps inner 10
 gaps outer 5
-smart_borders on
 
 # = # = # Proper Application Workspaces # = # = #
 assign [class="Telegram"] $ws9
 assign [class="Steam"] $ws8
-assign [class="Rhythmbox"] $ws10
+assign [class="Gradio"] $ws10
+assign [class="gPodder"] $ws10
+
 
 # = # = # Startup Tools # = # = #
 exec_always --no-startup-id node "$HOME/.config/i3/scripts/wallpaper.js" "$HOME/Pictures/wallpaper.png"
@@ -229,4 +254,5 @@ exec --no-startup-id dunst -config $HOME/.dunstrc
 
 # = # = # Startup Applications # = # = #
 exec telegram-desktop
-exec rhythmbox
+exec gradio
+exec gpodder
