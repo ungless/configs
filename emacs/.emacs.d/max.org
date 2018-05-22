@@ -452,5 +452,5 @@
    #+END_SRC
 * Themes
   #+BEGIN_SRC emacs-lisp
-    (load-theme 'solarized-light t)
+    (load-theme 'max t)
   #+END_SRC
