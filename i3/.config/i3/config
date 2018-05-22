@@ -7,7 +7,7 @@ set $down n
 set $up e
 set $right i
 
-set $background1 #180a01
+set $background1 #131b23
 set $background2 #bd632f
 set $background3 #f58f29
 set $border1 #191919
@@ -61,7 +61,6 @@ bindsym $mod+Return exec $terminal
 bindsym $mod+Shift+t exec emacs
 bindsym $mod+t exec emacsclient -c
 bindsym $mod+p exec firefox
-bindsym $mod+Shift+p exec firefox --private-window
 bindsym Print exec scrot '%Y-%m-%d.png' -e 'mv $f ~/Pictures/Screenshots/'
 
 bindsym $mod+Shift+q kill
@@ -240,11 +239,9 @@ gaps outer 5
 assign [class="Telegram"] $ws9
 assign [class="Steam"] $ws8
 assign [class="Gradio"] $ws10
-assign [class="gPodder"] $ws10
-
 
 # = # = # Startup Tools # = # = #
-exec_always --no-startup-id node "$HOME/.config/i3/scripts/wallpaper.js" "$HOME/Pictures/wallpaper.png"
+#exec_always --no-startup-id node "$HOME/.config/i3/scripts/wallpaper.js" "$HOME/Pictures/wallpaper.png"
 exec_always --no-startup-id feh --bg-scale $wallpaper
 
 exec --no-startup-id nm-applet
@@ -255,4 +252,3 @@ exec --no-startup-id dunst -config $HOME/.dunstrc
 # = # = # Startup Applications # = # = #
 exec telegram-desktop
 exec gradio
-exec gpodder
