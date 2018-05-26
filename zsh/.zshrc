@@ -18,20 +18,18 @@ eval neofetch
 source $ZSH/oh-my-zsh.sh
 
 # LOCAL VARIABLES
-home=$HOME
-workspace=$home/workspace
 
-# VARIABLES
+# env variables
 export EDITOR='emacsclient -c'
-export WORKSPACE=$workspace
-export GOPATH=$workspace/programming/go
+export WORKSPACE=$HOME/workspace
+export GOPATH=$WORKSPACE/programming/go
 export GOBIN=$GOPATH/bin
-
 export PATH=$HOME/.gem/ruby/2.4.0/bin:$GOBIN:$PATH
 
 LD_PRELOAD='./libcxxrt.so:/usr/$LIB/libstdc++.so.6'
 
 # ALIASES
+alias e=$EDITOR
 alias zshreload="source ~/.zshrc"
 
 # if [[ -n $SSH_CONNECTION ]]; then
