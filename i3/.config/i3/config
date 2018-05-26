@@ -7,13 +7,13 @@ set $down n
 set $up e
 set $right i
 
-set $background1 #131b23
-set $background2 #bd632f
-set $background3 #f58f29
+set $background1 #101010
+set $background2 #465457
+set $background3 #FD971F
 set $border1 #191919
-set $border2 #bd632f
-set $text1 #ffd800
-set $text2 #efd594
+set $border2 #465457
+set $text1 #F8F8F2
+set $text2 #F92672
 set $text3 #6d6d6d
 set $indicator #fff
 set $urgent_border #fff
@@ -25,7 +25,7 @@ set $urgent
 
 set $borders 3
 
-set $wallpaper $HOME/Pictures/arch.png
+set $wallpaper $HOME/Pictures/hubble.jpg
 
 set $primary-display DisplayPort-0
 set $secondary-display DVI-0
@@ -215,16 +215,16 @@ bar {
     height 30
     tray_padding 10
     font pango:Rancho 12
-    separator_symbol " ⬙ "
+    separator_symbol " ― "
     position top
 
     colors {
            background $background1
            statusline $text1
-           separator $text3
+           separator $text2
 
-           focused_workspace  $border2 $background2 $text2
-           active_workspace   $border1 $background1 $text2
+           focused_workspace  $border2 $background2 $text1
+           active_workspace   $border1 $background1 $text1
            inactive_workspace $border1 $background1 $text3
            urgent_workspace   $border1 $background3 $text1
            binding_mode       $border1 $background3 $text1
