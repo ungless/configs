@@ -21,45 +21,50 @@
 
 ** Package List
    #+BEGIN_SRC emacs-lisp
-              (defvar max/packages '(autopair
-                                     coffee-mode
-                                     company
-                                     company-quickhelp
-                                     company-statistics
-                                     conf-mode
-                                     dashboard
-                                     ein
-                                     elpy
-                                     emmet-mode
-                                     flycheck
-                                     go-autocomplete
-                                     go-eldoc
-                                     go-errcheck
-                                     go-mode
-                                     ivy
-                                     paganini-theme
-                                     magit
-                                     markdown-mode
-                                     marmalade
-                                     multiple-cursors
-                                     nlinum-relative
-                                     org-bullets
-                                     py-autopep8
-                                     rainbow-delimiters
-                                     solarized-theme
-                                     spray
-                                     sudo-edit
-                                     swiper
-                                     telephone-line
-                                     try
-                                     wakatime-mode
-                                     web-mode
-                                     writegood-mode
-                                     writeroom-mode
-                                     yaml-mode
-                                     yasnippet
-                                     exec-path-from-shell)
-                "Default packages")
+     (defvar max/packages '(autopair
+                            all-the-icons
+                            coffee-mode
+                            company
+                            company-quickhelp
+                            company-statistics
+                            conf-mode
+                            dashboard
+                            ein
+                            elpy
+                            emmet-mode
+                            flycheck
+                            go-autocomplete
+                            go-eldoc
+                            go-errcheck
+                            go-mode
+                            ivy
+                            paganini-theme
+                            zerodark-theme
+                            magit
+                            markdown-mode
+                            marmalade
+                            multiple-cursors
+                            nlinum-relative
+                            org-bullets
+                            projectile
+                            py-autopep8
+                            rainbow-delimiters
+                            solarized-theme
+                            spaceline-all-the-icons
+                            spray
+                            sudo-edit
+                            swiper
+                            telephone-line
+                            try
+                            wakatime-mode
+                            web-mode
+                            writegood-mode
+                            writeroom-mode
+                            yaml-mode
+                            yasnippet
+                            exec-path-from-shell)
+       "Default packages")
+
    #+END_SRC
 
 ** Install Package List
@@ -90,16 +95,16 @@
 ** Startup
    #+BEGIN_SRC emacs-lisp
      (setq inhibit-startup-message t)
-     (require 'dashboard)
-     (dashboard-setup-startup-hook)
+                                             ;   (require 'dashboard)
+                                             ;  (dashboard-setup-startup-hook)
      (setq dashboard-banner-logo-title (format-time-string "%A, %d %B %Y"))
-     (setq dashboard-startup-banner '3)
-     (setq dashboard-items '((recents  . 5)
-                             (projects . 5)
-                             (agenda . 5)))
-     (define-key dashboard-mode-map (kbd "<RET>") 'widget-button-press)
-     ;;     (setq initial-buffer-choice "~/workspace/org/programming/projects.org")
-          ;;(add-hook 'after-init-hook (lambda () (find-file "~/workspace/org/programming/projects.org")))
+     ;;     (setq dashboard-startup-banner 'emacs)
+     ;; (setq dashboard-items '((recents  . 5)
+     ;;                         (projects . 5)
+     ;;                         (agenda . 5)))
+     ;; (define-key dashboard-mode-map (kbd "<RET>") 'widget-button-press)
+     ;;(setq initial-buffer-choice "~/workspace/org/programming/projects.org")
+     ;;(add-hook 'after-init-hook (lambda () (find-file "~/workspace/org/programming/projects.org")))
    #+END_SRC
 
 ** Window
@@ -127,20 +132,28 @@
    #+END_SRC
 ** Fonts
    #+BEGIN_SRC emacs-lisp
-     (add-to-list 'default-frame-alist '(font . "Mononoki-11"))
+     (add-to-list 'default-frame-alist '(font . "Hack-11"))
      (when (window-system)
-       (set-default-font "Mononoki"))
+       (set-default-font "Hack"))
    #+END_SRC
-** Telephone Line
+** Mode Line
    #+BEGIN_SRC emacs-lisp
-     (require 'telephone-line)
-     (setq telephone-line-primary-left-separator 'telephone-line-halfcos-left
-         telephone-line-secondary-left-separator 'telephone-line-halfcos-hollow-left
-         telephone-line-primary-right-separator 'telephone-line-halfcos-right
-         telephone-line-secondary-right-separator 'telephone-line-halfcos-hollow-right)
-     (setq telephone-line-height 24
-         telephone-line-evil-use-short-tag t)
-     (telephone-line-mode 1)
+     ;; (require 'telephone-line)
+     ;; (setq telephone-line-primary-left-separator 'telephone-line-halfcos-left
+     ;;     telephone-line-secondary-left-separator 'telephone-line-halfcos-hollow-left
+     ;;     telephone-line-primary-right-separator 'telephone-line-halfcos-right
+     ;;     telephone-line-secondary-right-separator 'telephone-line-halfcos-hollow-right)
+     ;; (setq telephone-line-height 24
+     ;;     telephone-line-evil-use-short-tag t)
+     ;; (telephone-line-mode 1)
+
+     (require 'spaceline-all-the-icons)
+     (spaceline-all-the-icons-theme)
+     ;(spaceline-emacs-theme)
+
+     ;; (require 'zerodark-theme)
+     ;(set-face-attribute 'mode-line nil :font "Hack-20")
+     ;; (zerodark-setup-modeline-format)
    #+END_SRC
 ** Smooth scrolling
    #+BEGIN_SRC emacs-lisp
@@ -359,11 +372,11 @@
 
 ** Line Numbers
    #+BEGIN_SRC emacs-lisp
-     (require 'nlinum-relative)
+     (require 'nlinum)
      (setq nlinum-format "%d ")
      (setq nlinum-relative-redisplay-delay 0)
      (setq nlinum-highlight-current-line t)
-     (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+     (add-hook 'prog-mode-hook 'nlinum-mode)
    #+END_SRC
 
 ** Company
@@ -452,5 +465,6 @@
    #+END_SRC
 * Themes
   #+BEGIN_SRC emacs-lisp
-    (load-theme 'max t)
+;    (require 'spolsky-theme)
+     (load-theme 'molokai t)
   #+END_SRC
