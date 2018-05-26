@@ -24,6 +24,7 @@
      (defvar max/packages '(autopair
                             all-the-icons
                             coffee-mode
+                            counsel-dash
                             company
                             company-quickhelp
                             company-statistics
@@ -140,7 +141,7 @@
    #+BEGIN_SRC emacs-lisp
      ;; (require 'telephone-line)
      ;; (setq telephone-line-primary-left-separator 'telephone-line-halfcos-left
-     ;;     telephone-line-secondary-left-separator 'telephone-line-halfcos-hollow-left
+      ;;     telephone-line-secondary-left-separator 'telephone-line-halfcos-hollow-left
      ;;     telephone-line-primary-right-separator 'telephone-line-halfcos-right
      ;;     telephone-line-secondary-right-separator 'telephone-line-halfcos-hollow-right)
      ;; (setq telephone-line-height 24
@@ -180,6 +181,13 @@
     (define-key company-active-map (kbd "<tab>") 'company-complete)
    #+END_SRC
 
+** Documentation
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-x t") 'man)
+     (setq helm-dash-common-docsets '("JavaScript" "HTML" "Django" "Go" "Python 3"))
+
+     (add-hook 'ruby-mode-hook (lambda () (setq-local counsel-dash-docsets '("Ruby"))))
+   #+END_SRC
 ** General
    #+BEGIN_SRC emacs-lisp
     (global-set-key (kbd "C-+") 'text-scale-increase)
@@ -332,34 +340,38 @@
     #+END_SRC
 *** Markdown
     #+BEGIN_SRC emacs-lisp
-     (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-     (add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
-     (add-hook 'markdown-mode-hook
-               (lambda ()
-                 (visual-line-mode t)
-                 (writegood-mode t)
-                 (flyspell-mode t)))
+      (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+      (add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
+      (add-hook 'markdown-mode-hook
+                (lambda ()
+                  (visual-line-mode t)
+                  (setq-local counsel-dash-docsets '("Markdown"))
+                  (writegood-mode t)
+                  (flyspell-mode t)))
     #+END_SRC
 *** Go
     #+BEGIN_SRC emacs-lisp
-     (require 'go-autocomplete)
+      (require 'go-autocomplete)
 
-     (add-hook 'go-mode-hook
-               (lambda ()
-                 (go-eldoc-setup)
-                 (add-hook 'before-save-hook 'gofmt-before-save)))
+      (add-hook 'go-mode-hook
+                (lambda ()
+                  (go-eldoc-setup)
+                  (setq-local counsel-dash-docsets '("Go"))
+                  (add-hook 'before-save-hook 'gofmt-before-save)))
     #+END_SRC
 *** Python
     #+BEGIN_SRC emacs-lisp
-     (require 'elpy)
-     (elpy-enable)
+      (require 'elpy)
+      (elpy-enable)
 
-     (require 'py-autopep8)
-     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+      (require 'py-autopep8)
+      (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+      (add-hook 'elpy-mode-hook (lambda () (setq-local counsel-dash-docsets '("Python"))))
     #+END_SRC
 *** SCSS
     #+BEGIN_SRC emacs-lisp
       (add-to-list 'auto-mode-alist '("\\.scss\\'" . css-mode))
+      (add-hook 'elpy-mode-hook (lambda () (setq-local counsel-dash-docsets '("SCSS"))))
     #+END_SRC
 
 ** Brackets
