@@ -15,6 +15,8 @@
                  '("marmalade" . "http://marmalade-repo.org/packages/"))
     (add-to-list 'package-archives
                  '("melpa" . "http://melpa.milkbox.net/packages/") t)
+    (add-to-list 'package-archives
+                 '("peach-melpa" . "http://peach-melpa.org/packages/") t)
 
     (setq package-archive-enable-alist '(("melpa" deft magit)))
    #+END_SRC
@@ -48,6 +50,7 @@
                             multiple-cursors
                             nlinum-relative
                             org-bullets
+                            php-mode
                             projectile
                             py-autopep8
                             rainbow-delimiters
@@ -134,9 +137,9 @@
    #+END_SRC
 ** Fonts
    #+BEGIN_SRC emacs-lisp
-     (add-to-list 'default-frame-alist '(font . "Hack-11"))
+     (add-to-list 'default-frame-alist '(font . "Iosevka-11"))
      (when (window-system)
-       (set-default-font "Hack"))
+       (set-default-font "Iosevka"))
    #+END_SRC
 ** Mode Line
    #+BEGIN_SRC emacs-lisp
@@ -262,24 +265,24 @@
   #+END_SRC
 * E-Mail
   #+BEGIN_SRC emacs-lisp
-    (require 'mu4e)
+    ;; (require 'mu4e)
 
-    (setq mu4e-maildir-shortcuts
-          '(("/INBOX"             . ?i)))
-    (setq mu4e-maildir "~/mail")
-    (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-    (setq mu4e-get-mail-command "offlineimap")
+    ;; (setq mu4e-maildir-shortcuts
+    ;;       '(("/INBOX"             . ?i)))
+    ;; (setq mu4e-maildir "~/mail")
+    ;; (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+    ;; (setq mu4e-get-mail-command "offlineimap")
 
-    (require 'smtpmail)
-    (require 'starttls)
-    (setq send-mail-function 'smtpmail-send-it
-          message-send-mail-function 'smtpmail-send-it
-          smtpmail-starttls-credentials '(("smtp.webfaction.com" 587 nil nil))
-          smtpmail-auth-credentials (expand-file-name "~/.authinfo")
-          smtpmail-default-smtp-server "smtp.webfaction.com"
-          smtpmail-smtp-server "smtp.webfaction.com"
-          smtpmail-smtp-service 587
-          smtpmail-debug-info t)
+    ;; (require 'smtpmail)
+    ;; (require 'starttls)
+    ;; (setq send-mail-function 'smtpmail-send-it
+    ;;       message-send-mail-function 'smtpmail-send-it
+    ;;       smtpmail-starttls-credentials '(("smtp.webfaction.com" 587 nil nil))
+    ;;       smtpmail-auth-credentials (expand-file-name "~/.authinfo")
+    ;;       smtpmail-default-smtp-server "smtp.webfaction.com"
+    ;;       smtpmail-smtp-server "smtp.webfaction.com"
+    ;;       smtpmail-smtp-service 587
+    ;;       smtpmail-debug-info t)
   #+END_SRC
 * Programming
 ** Expansion
@@ -359,6 +362,10 @@
                   (go-eldoc-setup)
                   (setq-local counsel-dash-docsets '("Go"))
                   (add-hook 'before-save-hook 'gofmt-before-save)))
+    #+END_SRC
+*** PHP
+    #+BEGIN_SRC emacs-lisp
+      (add-to-list 'auto-mode-alist '("\\.php$" . web-mode))
     #+END_SRC
 *** Python
     #+BEGIN_SRC emacs-lisp
@@ -450,6 +457,44 @@
      (setq indent-tabs-mode nil)
    #+END_SRC
 * Other Text Editing
+** LaTeX
+   #+BEGIN_SRC emacs-lisp
+     (setq TeX-auto-save t)
+     (setq TeX-parse-self t)
+     (setq TeX-save-query nil)
+     (setq TeX-PDF-mode t)
+
+     (require 'flymake)
+
+     (defun flymake-get-tex-args (file-name)
+     (list "pdflatex"
+     (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
+
+     (add-hook 'LaTeX-mode-hook 'flymake-mode)
+
+     (setq ispell-program-name "aspell") ; could be ispell as well, depending on your preferences
+     (setq ispell-dictionary "english") ; this can obviously be set to any language your spell-checking program supports
+
+     (add-hook 'LaTeX-mode-hook 'flyspell-mode)
+     (add-hook 'LaTeX-mode-hook 'flyspell-buffer)
+
+     (defun turn-on-outline-minor-mode ()
+     (outline-minor-mode 1))
+
+     (add-hook 'LaTeX-mode-hook 'turn-on-outline-minor-mode)
+     (add-hook 'latex-mode-hook 'turn-on-outline-minor-mode)
+     (setq outline-minor-mode-prefix "\C-c \C-o") ; Or something else
+
+     (require 'tex-site)
+     (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
+     (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
+     (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
+     (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
+     (add-hook 'latex-mode-hook 'turn-on-reftex) ; with Emacs latex mode
+     ;; (add-hook 'reftex-load-hook 'imenu-add-menubar-index)
+     (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+
+   #+END_SRC
 ** Writeroom Mode
    #+BEGIN_SRC emacs-lisp
      (require 'writeroom-mode)
@@ -479,5 +524,5 @@
 * Themes
   #+BEGIN_SRC emacs-lisp
 ;    (require 'spolsky-theme)
-     (load-theme 'molokai t)
+     (load-theme 'max t)
   #+END_SRC
