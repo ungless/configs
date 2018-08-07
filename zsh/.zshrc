@@ -24,7 +24,7 @@ export EDITOR='emacsclient -c'
 export WORKSPACE=$HOME/workspace
 export GOPATH=$WORKSPACE/programming/go
 export GOBIN=$GOPATH/bin
-export PATH=$HOME/.gem/ruby/2.4.0/bin:$GOBIN:$PATH
+export PATH=$HOME/.gem/ruby/2.5.0/bin:$GOBIN:$PATH
 
 LD_PRELOAD='./libcxxrt.so:/usr/$LIB/libstdc++.so.6'
 
