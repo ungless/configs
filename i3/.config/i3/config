@@ -7,12 +7,12 @@ set $down n
 set $up e
 set $right i
 
-set $background1 #101010
+set $background1 #dfbbb1
 set $background2 #465457
-set $background3 #FD971F
+set $background3 #785589
 set $border1 #191919
 set $border2 #465457
-set $text1 #F8F8F2
+set $text1 #d5f9de
 set $text2 #F92672
 set $text3 #6d6d6d
 set $indicator #fff
@@ -25,7 +25,7 @@ set $urgent
 
 set $borders 3
 
-set $wallpaper $HOME/Pictures/hubble.jpg
+set $wallpaper $HOME/Pictures/shatter.png
 
 set $primary-display DisplayPort-0
 set $secondary-display DVI-0
@@ -54,7 +54,7 @@ set $ws10 "X"
 
 
 # = # = # Fonts # = # = #
-font pango:Rancho 12
+font pango:Iosevka 12
 
 # = # = # Key bindings # = # = #
 bindsym $mod+Return exec $terminal
@@ -200,39 +200,37 @@ bindsym $mod+r mode "resize"
 bindsym $mod+Shift+Tab mode "$mode_system"
 
 # = # = # Colours # = # = #
-client.focused           $background3   $background3   $text2   $indicator
+client.focused           $background3   $background3   $text1   $indicator
 client.unfocused         $background1   $background1   $text3  $indicator
 client.focused_inactive  $background1   $background1   $text3  $indicator
 client.urgent            $urgent_border   $background3  $urgent_text   $indicator
 
 # = # = # Bar # = # = #
-# bar {
-#     i3bar_command $HOME/.config/polybar/start.sh
-# }
-
 bar {
-    status_command i3status -c $HOME/.config/i3/i3status.conf
-    height 30
-    tray_padding 10
-    font pango:Rancho 12
-    separator_symbol " ― "
-    position top
-
-    colors {
-           background $background1
-           statusline $text1
-           separator $text2
-
-           focused_workspace  $border2 $background2 $text1
-           active_workspace   $border1 $background1 $text1
-           inactive_workspace $border1 $background1 $text3
-           urgent_workspace   $border1 $background3 $text1
-           binding_mode       $border1 $background3 $text1
-    }
+    i3bar_command $HOME/.config/polybar/start.sh
 }
 
+# bar {
+#     status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
+#     height 28
+#     tray_padding 20
+#     font pango:Roboto 12
+#     position top
+
+#     colors {
+#            background $background1
+#            statusline $text1
+
+#            focused_workspace  $border2 $background2 $text1
+#            active_workspace   $border1 $background1 $text1
+#            inactive_workspace $border1 $background1 $text3
+#            urgent_workspace   $border1 $background3 $text1
+#            binding_mode       $border1 $background3 $text1
+#     }
+# }
+
 # = # = # Gaps # = # = #
-gaps inner 10
+gaps inner 20
 gaps outer 5
 
 # = # = # Proper Application Workspaces # = # = #
