@@ -1,9 +1,10 @@
 [colors]
-background = #231f20
+background = #dfbbb1
 background-alt = #efefef
-foreground = #ece2d0
-foreground-alt = #250902
-primary = #f0cea0
+foreground = #7d314c
+foreground-alt = #F92672
+foreground-bright = #d5f9de
+primary = #785589
 
 [global/wm]
 margin-top = 5
@@ -21,10 +22,11 @@ fixed-center = true
 foreground = ${colors.foreground-alt}
 background = ${colors.background}
 
-module-margin-left = 0
-module-margin-right = 1
 
-font-0 = Mononoki:size=12;2
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = Iosevka:size=12;2
 font-1 = Font Awesome:size=12;2
 font-2 = sans:size=11:antialias=false;2
 
@@ -82,17 +84,17 @@ label-unfocused-padding = 1
 
 label-visible = %name%
 label-visible-background = ${colors.primary}
-label-visible-foreground = ${colors.foreground-alt}
+label-visible-foreground = ${colors.foreground-bright}
 label-visible-padding = 1
 
 label-focused = %name%
 label-focused-background = ${colors.primary}
-label-focused-foreground = ${colors.foreground-alt}
+label-focused-foreground = ${colors.foreground-bright}
 label-focused-padding = 1
 
 label-urgent = %name%
 label-urgent-foreground = ${colors.primary}
-label-urgent-background = ${colors.foreground-alt}
+label-urgent-background = ${colors.foreground-bright}
 label-urgent-padding = 1
 
 [module/cpu]
@@ -100,8 +102,8 @@ type = internal/cpu
 interval = 2
 
 format-prefix = " CPU "
-format-prefix-background = ${colors.background-alt}
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-background = ${colors.primary}
+format-prefix-foreground = ${colors.foreground-bright}
 
 label = " %percentage%% "
 label-foreground = ${colors.primary}
@@ -124,8 +126,9 @@ label-muted-padding = 1
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-ramp-volume-background = ${colors.background-alt}
-ramp-volume-foreground = ${colors.foreground-alt}
+
+ramp-volume-background = ${colors.primary}
+ramp-volume-foreground = ${colors.foreground-bright}
 ramp-volume-padding = 1
 
 [module/time]
@@ -135,8 +138,9 @@ interval = 5
 time = " %H:%M "
 
 format-prefix = "  "
-format-prefix-background = ${colors.background-alt}
-format-prefix-foreground = ${colors.foreground-alt}
+
+format-prefix-background = ${colors.primary}
+format-prefix-foreground = ${colors.foreground-bright}
 
 label = %time%
 label-foreground = ${colors.primary}
@@ -149,8 +153,8 @@ interval = 5
 date = " %A, %d %B %Y "
 
 format-prefix = "  "
-format-prefix-background = ${colors.background-alt}
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-background = ${colors.primary}
+format-prefix-foreground = ${colors.foreground-bright}
 
 label = %date%
 label-foreground = ${colors.primary}
@@ -161,8 +165,8 @@ exec = echo $(( ($(date +%s) - $(date +%s -ud '2016-05-19 00:00:00')) / 3600 / 2
 interval = 60
 label = " %output% "
 format-prefix = " # "
-format-prefix-background = ${colors.background-alt}
-format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-background = ${colors.primary}
+format-prefix-foreground = ${colors.foreground-bright}
 format-foreground = ${colors.primary}
 
 [module/backlight]
@@ -225,8 +229,8 @@ format-connected = <label-connected>
 format-disconnected = <label-disconnected>
 
 format-connected-prefix = "  "
-format-connected-prefix-background = ${colors.background-alt}
-format-connected-prefix-foreground = ${colors.foreground-alt}
+format-connected-prefix-background = ${colors.primary}
+format-connected-prefix-foreground = ${colors.foreground-bright}
 
 label-connected = %essid%
 label-disconnected = "DISCONNECTED"
@@ -234,4 +238,4 @@ label-connected-padding = 1
 label-disconnected-padding = 1
 
 label-connected-foreground = ${colors.primary}
-label-disconnected-foreground = ${colors.primary}
+label-disconnected-foreground = ${colors.foreground-alt}
