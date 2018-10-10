@@ -25,14 +25,12 @@
   "max theme")
 
 (let ((class '((class color) (min-colors 89)))
-      (primary "#dde2c6")
-      (fg1 "#24292a")
+      (fg1 "#1a0e0a")
       (fg2 "#b26e63")
-      (fg3 "#74a4bc")
+      (fg3 "#b0bc98")
       (fg4 "#6b6b6c")
-      (white "#f4f4f8")
       (textbg "#e3d9cc")
-      (bg1 "#fbf6e9")
+      (bg1 "#faf1dd")
       (bg2 "#e7cfc0")
       (bg3 "#bfab9b")
       (bg4 "#eaebed")
@@ -40,7 +38,7 @@
       (key2 "#0189cc")
       (key3 "#ff79c6")
       (type "#0a2463")
-      (builtin "#3e6990")
+      (builtin "#587b7f")
       (keyword "#4b93b1")
       (const   "#a72608")
       (comment "#820263")
@@ -48,7 +46,6 @@
       (str     "#337357")
       (var     "#bc8034")
       (warning "#ffb86c")
-      (err "#fe4a49")
       (colour-1 "#5c374c")
       (colour-2 "#006989")
       (colour-3 "#ff8c61")
@@ -62,7 +59,7 @@
   (custom-theme-set-faces
    'max
    ;; default
-   `(cursor ((,class (:background ,fg2))))
+   `(cursor ((,class (:background ,fg3))))
    `(default ((((type nil)) (:background "#000000" :foreground ,fg1))
               (,class (:background ,bg1 :foreground ,fg1))))
    `(default-italic ((,class (:italic t))))
@@ -78,7 +75,7 @@
    `(nlinum-relative-current-face ((,class (:bold t :foreground ,fg4 :background ,bg2))))
    `(minibuffer-prompt ((,class (:bold t :foreground ,keyword))))
    `(region ((,class (:background ,bg3 :foreground ,fg1))))
-   `(show-paren-match-face ((,class (:background ,colour-8))))
+   `(show-paren-match-face ((,class (:background ,warning))))
    `(trailing-whitespace ((,class :foreground nil :background ,warning)))
    `(vertical-border ((,class (:foreground ,bg2))))
    `(warning ((,class (:foreground ,warning))))
@@ -100,7 +97,7 @@
    `(font-lock-warning-face ((,class (:foreground ,warning))))
 
    ;; mode-line
-   `(mode-line ((,class (:foreground ,fg1 :background ,primary :box (:color ,fg1 :line-width 1)))))
+   `(mode-line ((,class (:foreground ,fg1 :background ,fg3 :box (:color ,fg1 :line-width 1)))))
    `(mode-line-inactive ((,class (:foreground ,fg1 :background ,bg3 :box (:color ,fg1 :line-width 1)))))
 
    ;; ivy
@@ -214,7 +211,6 @@
 
    ;; flycheck
    `(flycheck-error ((,class (:underline (:style wave :color ,colour-5)))))
-   `(flycheck-fringe-error ((,class (:background ,err :color ,white))))
 
    ;; flyspell
    `(flyspell-incorrect ((,class (:underline (:style wave :color ,colour-5)))))
