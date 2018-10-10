@@ -1,10 +1,10 @@
 [colors]
-background = #dfbbb1
+background = #7f8fa6
 background-alt = #efefef
-foreground = #7d314c
+foreground = #dcdde1
 foreground-alt = #F92672
 foreground-bright = #d5f9de
-primary = #785589
+primary = #2f3640
 
 [global/wm]
 margin-top = 5
@@ -14,8 +14,8 @@ margin-bottom = 5
 monitor = ${env:MONITOR}
 height = 38
 width = 100%
-offset-x = 0%
-offset-y = 0%
+offset-x = 10%
+offset-y = 10%
 radius = 0
 fixed-center = true
 
@@ -31,26 +31,23 @@ font-1 = Font Awesome:size=12;2
 font-2 = sans:size=11:antialias=false;2
 
 modules-left = i3
-modules-right = wlan cpu volume date time day
+modules-center = time
+modules-right = wlan cpu volume date day
 
-border-top = 0
-border-right = 0
-border-left = 0
-border-bottom = 5
+border-top = 5
+border-right = 5
+border-left = 30
+border-bottom = 0
 border-color = #00000000
 
 cursor-click = pointer
 
 wm-restack = i3
 
-tray-position = right
+tray-position = left
 tray-padding = 2
 tray-transparent = false
-tray-offset-y = 0%
-tray-offset-x = 0%
-tray-maxsize = 25
 tray-detached = false
-tray-background = ${colours.bg-colour}
 
 scroll-up = i3-desknext
 scroll-down = i3-deskprev
