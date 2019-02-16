@@ -64,56 +64,56 @@ URxvt.perl-ext-common: default,clipboard
 ! *.color15:      #280c22
 
 ! Molokai theme
-! *background: #101010
-! *foreground: #d0d0d0
-! *cursorColor: #d0d0d0
-! *color0: #101010
-! *color1: #960050
-! *color2: #66aa11
-! *color3: #c47f2c
-! *color4: #30309b
-! *color5: #7e40a5
-! *color6: #3579a8
-! *color7: #9999aa
-! *color8: #303030
-! *color9: #ff0090
-! *color10: #80ff00
-! *color11: #ffba68
-! *color12: #5f5fee
-! *color13: #bb88dd
-! *color14: #4eb4fa
-! *color15: #d0d0d0
+*background: #101010
+*foreground: #d0d0d0
+*cursorColor: #d0d0d0
+*color0: #101010
+*color1: #960050
+*color2: #66aa11
+*color3: #c47f2c
+*color4: #30309b
+*color5: #7e40a5
+*color6: #3579a8
+*color7: #9999aa
+*color8: #303030
+*color9: #ff0090
+*color10: #80ff00
+*color11: #ffba68
+*color12: #5f5fee
+*color13: #bb88dd
+*color14: #4eb4fa
+*color15: #d0d0d0
 
 ! Max theme
-*.foreground:   #1a0e0a
-*.background:   #f3e9dc
+! *.foreground:   #1a0e0a
+! *.background:   #f3e9dc
 ! sun-bleached white bg
-!*.background:   #faeeb0
-*.cursorColor:  #548687
+! *.background:   #faeeb0
+! *.cursorColor:  #548687
 ! black
-*.color0:       #1a0e0a
-*.color8:       #6b6b6c
-!! red
-*.color1:       #a72608
-*.color9:       #5e0b15
+! *.color0:       #1a0e0a
+! *.color8:       #6b6b6c
+! red
+! *.color1:       #a72608
+! *.color9:       #5e0b15
 ! green
-*.color2:       #AAB987
-*.color10:      #287d6a
+! *.color2:       #AAB987
+! *.color10:      #287d6a
 ! yellow
-*.color3:       #5c374c
-*.color11:      #bc8034
+! *.color3:       #5c374c
+! *.color11:      #bc8034
 ! blue
-*.color4:       #0189cc
-*.color12:      #44475a
+! *.color4:       #0189cc
+! *.color12:      #44475a
 ! magenta
-*.color5:       #9472b1
-*.color13:      #cb9cf2
+! *.color5:       #9472b1
+! *.color13:      #cb9cf2
 ! cyan
-*.color6:       #006989
-*.color14:      #548687
+! *.color6:       #006989
+! *.color14:      #548687
 ! white
-*.color7:       #bfab9b
-*.color15:      #4b4237
+! *.color7:       #bfab9b
+! *.color15:      #4b4237
 
 ! #define S_base03        #002b36
 ! #define S_base02        #073642

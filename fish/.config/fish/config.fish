@@ -1,5 +1,3 @@
-eval neofetch
-
 set fish_greeting 'Good day,' (whoami)
 # fish git prompt
 set __fish_git_prompt_showdirtystate 'yes'

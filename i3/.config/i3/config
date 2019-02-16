@@ -7,9 +7,9 @@ set $down n
 set $up e
 set $right i
 
-set $background1 #7f8fa6
+set $background1 #2f3640
 set $background2 #465457
-set $background3 #2f3640
+set $background3 #EEF5DB
 set $border1 #191919
 set $border2 #465457
 set $text1 #d5f9de
@@ -25,7 +25,7 @@ set $urgent
 
 set $borders 3
 
-set $wallpaper $HOME/Pictures/shatter.png
+set $wallpaper $HOME/Pictures/hubble.jpg
 
 set $primary-display DisplayPort-0
 set $secondary-display DVI-0
@@ -59,8 +59,9 @@ font pango:Iosevka 12
 # = # = # Key bindings # = # = #
 bindsym $mod+Return exec $terminal
 bindsym $mod+Shift+t exec emacs
+bindsym $mod+g exec emacsclient -c; exec $terminal
 bindsym $mod+t exec emacsclient -c
-bindsym $mod+p exec firefox
+bindsym $mod+p exec chromium
 bindsym Print exec scrot '%Y-%m-%d.png' -e 'mv $f ~/Pictures/Screenshots/'
 
 bindsym $mod+Shift+q kill
@@ -167,16 +168,17 @@ bindsym $mod+Shift+comma exec playerctl previous
 bindsym $mod+Shift+apostrophe exec playerctl play-pause
 
 # = # = # Modes # = # = #
+set $resize_length 100
 mode "resize" {
-        bindsym $down resize shrink width 10 px or 10 ppt
-        bindsym $up resize grow height 10 px or 10 ppt
-        bindsym $left resize shrink height 10 px or 10 ppt
-        bindsym $right resize grow width 10 px or 10 ppt
+        bindsym $down resize shrink width $resize_length px or $resize_length ppt
+        bindsym $up resize grow height $resize_length px or $resize_length ppt
+        bindsym $left resize shrink height $resize_length px or $resize_length ppt
+        bindsym $right resize grow width $resize_length px or $resize_length ppt
 
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-	bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width $resize_length px or $resize_length ppt
+        bindsym Down resize grow height $resize_length px or $resize_length ppt
+	bindsym Up resize shrink height $resize_length px or $resize_length ppt
+        bindsym Right resize grow width $resize_length px or $resize_length ppt
 
         bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -213,7 +215,7 @@ bar {
 
 
 
-exec_always --no-startup-id hsetroot -solid "$background1"
+#exec_always --no-startup-id hsetroot -solid "$background1"
 
 # bar {
 #     status_command i3blocks -c $HOME/.config/i3/i3blocks.conf
@@ -242,10 +244,11 @@ gaps outer 3
 assign [class="Telegram"] $ws9
 assign [class="Steam"] $ws8
 assign [class="Gradio"] $ws10
+assign [class="Gradio"] output 2
 
 # = # = # Startup Tools # = # = #
 #exec_always --no-startup-id node "$HOME/.config/i3/scripts/wallpaper.js" "$HOME/Pictures/wallpaper.png"
-#exec_always --no-startup-id feh --bg-scale $wallpaper
+exec_always --no-startup-id feh --bg-fill $wallpaper
 
 exec --no-startup-id nm-applet
 exec --no-startup-id compton --config $HOME/.config/i3/compton.conf -b

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ $1 == "radio4" ]
+then
+   mplayer http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio4fm_mf_p
+elif [ $1 == "lbc" ]
+then
+   mplayer http://media-ice.musicradio.com/LBCLondonMP3Low
+fi

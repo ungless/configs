@@ -1,0 +1,426 @@
+#+TITLE: Max Ungless Emacs Configuration
+
+* General configuration
+** User Settings
+  #+BEGIN_SRC emacs-lisp
+    (setq user-full-name "Max Ungless")
+    (setq user-mail-address "max@maxungless.com")
+  #+END_SRC
+* Packages
+** Package Repositories
+  #+BEGIN_SRC emacs-lisp
+    (load "package")
+    (package-initialize)
+    (add-to-list 'package-archives
+                 '("marmalade" . "http://marmalade-repo.org/packages/"))
+    (add-to-list 'package-archives
+                 '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+    (setq package-archive-enable-alist '(("melpa" deft magit)))
+  #+END_SRC
+
+** Package List
+  #+BEGIN_SRC emacs-lisp
+    (defvar max/packages '(exec-path-from-shell
+			   telephone-line
+			   magit
+			   ivy
+			   swiper
+			   multiple-cursors
+			   marmalade
+			   org
+			   org-bullets
+			   autopair
+			   yasnippet
+			   emmet-mode
+			   nlinum-relative
+                           rainbow-delimiters
+			   writegood-mode
+			   writeroom-mode
+			   spray
+			   flycheck
+			   conf-mode
+			   web-mode
+			   yaml-mode
+			   coffee-mode
+			   markdown-mode
+			   go-mode
+			   go-autocomplete
+			   go-errcheck
+			   go-eldoc
+			   elpy
+			   py-autopep8
+			   scss-mode
+			   ein
+			   sudo-edit
+			   try
+			   wakatime-mode
+			   spolsky-theme)
+      "Default packages")
+  #+END_SRC
+
+** Install Package List
+  #+BEGIN_SRC emacs-lisp
+    (require 'cl)
+    (defun max/packages-installed-p ()
+      (loop for pkg in max/packages
+	    when (not (package-installed-p pkg)) do (return nil)
+	    finally (return t)))
+
+    (unless (max/packages-installed-p)
+      (message "%s" "Refreshing package database...")
+      (package-refresh-contents)
+      (dolist (pkg max/packages)
+	(when (not (package-installed-p pkg))
+	  (package-install pkg))))
+  #+END_SRC
+
+* OS Tools
+** Environment
+  #+BEGIN_SRC emacs-lisp
+    (require 'exec-path-from-shell)
+    (exec-path-from-shell-copy-env "GOPATH")
+    (exec-path-from-shell-copy-env "PATH")
+    (add-to-list 'exec-path (concat (getenv "GOPATH") "/bin"))
+  #+END_SRC
+
+* Emacs
+** Startup
+   #+BEGIN_SRC emacs-lisp
+     (setq inhibit-startup-message t)
+   #+END_SRC
+
+** Window
+   #+BEGIN_SRC emacs-lisp
+     (setq frame-title-format '("GNU Emacs " emacs-version))
+     (tool-bar-mode -1)
+   #+END_SRC
+
+** Yes No Dialog
+   #+BEGIN_SRC emacs-lisp
+     (fset 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
+
+** Highlighting Line
+   #+BEGIN_SRC emacs-lisp
+     (global-hl-line-mode)
+   #+END_SRC
+
+** Backup
+   #+BEGIN_SRC emacs-lisp
+     (setq make-backup-files nil)
+   #+END_SRC
+
+** Indentation
+  #+BEGIN_SRC emacs-lisp
+    (setq-default indent-tabs-mode nil)
+    (setq indent-tabs-mode nil)
+  #+END_SRC
+
+** Fonts
+   #+BEGIN_SRC emacs-lisp
+     (when (window-system)
+       (set-default-font "Iosevka"))
+   #+END_SRC
+
+** Telephone Line
+   #+BEGIN_SRC emacs-lisp
+     (require 'telephone-line)
+     (setq telephone-line-primary-left-separator 'telephone-line-identity-left
+         telephone-line-secondary-left-separator 'telephone-line-identity-hollow-left
+         telephone-line-primary-right-separator 'telephone-line-identity-right
+         telephone-line-secondary-right-separator 'telephone-line-identity-hollow-right)
+     (setq telephone-line-height 24
+         telephone-line-evil-use-short-tag t)
+     (telephone-line-mode 1)
+    #+END_SRC
+
+** Smooth scrolling
+   #+BEGIN_SRC emacs-lisp
+    (setq redisplay-dont-pause t
+          scroll-margin 1
+          scroll-step 1
+          scroll-conservatively 10000
+          scroll-preserve-screen-position 1)
+   #+END_SRC
+   
+* Keybindings
+** General
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-+") 'text-scale-increase)
+    (global-set-key (kbd "C--") 'text-scale-decrease)
+  #+END_SRC
+
+** Magit
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-x i") 'magit-status)
+  #+END_SRC
+** Programs
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-c C-k") 'compile)
+  #+END_SRC
+
+** Expansion
+  #+BEGIN_SRC emacs-lisp
+    (require 'company)
+    (global-set-key (kbd "M-/") 'hippie-expand)
+    (global-set-key (kbd "C-.") 'company-complete)
+    (define-key company-active-map (kbd "C-d") 'company-show-doc-buffer)
+    (define-key company-active-map (kbd "C-n") 'company-select-next)
+    (define-key company-active-map (kbd "C-p") 'company-select-previous)
+    (define-key company-active-map (kbd "<tab>") 'company-complete)
+  #+END_SRC
+
+** Programming
+  #+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "RET") 'newline-and-indent)
+    (global-set-key (kbd "C-;") 'comment-or-uncomment-region)
+  #+END_SRC
+
+** Org
+   #+BEGIN_SRC emacs-lisp
+     (bind-key "C-c p" 'org-capture)
+     (bind-key "C-c a" 'org-agenda)
+     (global-set-key (kbd "C-c o")
+                     (lambda () (interactive) (find-file org-default-notes-file)))
+   #+END_SRC
+
+** Ivy
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-x b") 'ivy-switch-buffer)
+   #+END_SRC
+
+** Swiper
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-s") 'swiper)
+     (global-set-key (kbd "C-r") 'swiper)
+     (global-set-key (kbd "C-c C-r") 'ivy-resume)
+   #+END_SRC
+
+** Multiple Cursors
+   #+BEGIN_SRC emacs-lisp
+     (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+   #+END_SRC
+
+* Org Mode
+** Packages
+  #+BEGIN_SRC emacs-lisp
+    (require 'org)
+    (require 'org-bullets)
+    (require 'flyspell)
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    (add-hook 'org-mode-hook
+              (lambda ()
+                (flyspell-mode)))
+    (add-hook 'org-mode-hook
+              (lambda ()
+                (writegood-mode)))
+  #+END_SRC
+** Configurations
+  #+BEGIN_SRC emacs-lisp
+     (setq org-directory "~/workspace/org/")
+     (setq org-default-notes-file "~/workspace/org/programming/notes.org")
+     (setq org-export-html-postamble-format
+           '(("en" "<p class=\"date\">Date: %d</p>")))
+     (setq org-export-html-date-format-string "%A %d %B %Y")
+  #+END_SRC
+* E-Mail
+  #+BEGIN_SRC emacs-lisp
+    (require 'mu4e)
+
+    (setq mu4e-maildir-shortcuts
+          '(("/INBOX"             . ?i)))
+    (setq mu4e-maildir "~/mail")
+    (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+    (setq mu4e-get-mail-command "offlineimap")
+
+    (require 'smtpmail)
+    (require 'starttls)
+    (setq send-mail-function 'smtpmail-send-it
+          message-send-mail-function 'smtpmail-send-it
+          smtpmail-starttls-credentials '(("smtp.webfaction.com" 587 nil nil))
+          smtpmail-auth-credentials (expand-file-name "~/.authinfo")
+          smtpmail-default-smtp-server "smtp.webfaction.com"
+          smtpmail-smtp-server "smtp.webfaction.com"
+          smtpmail-smtp-service 587
+          smtpmail-debug-info t)
+  #+END_SRC
+* Editing Text
+** Autopairing
+   #+BEGIN_SRC emacs-lisp
+     (require 'autopair)
+   #+END_SRC
+
+** Line Numbers
+   #+BEGIN_SRC emacs-lisp
+     (require 'nlinum-relative)
+     (setq nlinum-relative-redisplay-delay 0)
+     (add-hook 'prog-mode-hook 'nlinum-relative-mode)
+   #+END_SRC
+
+** Auto Complete
+   #+BEGIN_SRC emacs-lisp
+     (require 'company)
+     (add-hook 'after-init-hook #'global-company-mode)
+     (setq company-idle-delay 0
+           company-echo-delay 0
+           company-dabbrev-downcase nil
+           company-minimum-prefix-length 2
+           company-selection-wrap-around t
+           company-transformers '(company-sort-by-occurrence
+                                  company-sort-by-backend-importance))
+   #+END_SRC
+
+*** Extensions
+    #+BEGIN_SRC emacs-lisp
+      (require 'company-quickhelp)
+      (add-hook 'company-mode-hook #'company-quickhelp-mode)
+      (setq company-quickhelp-delay 2)
+      (require 'company-statistics)
+      (add-hook 'after-init-hook #'company-statistics-mode)
+      (setq company-selection-wrap-around t
+            company-idle-delay 1.0
+            company-minimum-prefix-length 3
+            company-show-numbers t
+            company-tooltip-align-annotations t
+            company-search-regexp-function #'company-search-flex-regexp)
+    #+END_SRC
+** Indenting
+   #+BEGIN_SRC emacs-lisp
+     (defun untabify-buffer ()
+       (interactive)
+       (untabify (point-min) (point-max)))
+
+     (defun indent-buffer ()
+       (interactive)
+       (indent-region (point-min) (point-max)))
+
+     (defun cleanup-buffer ()
+       "Perform a bunch of operations on the whitespace content of a buffer."
+       (interactive)
+       (indent-buffer)
+       (untabify-buffer)
+       (delete-trailing-whitespace))
+
+     (defun cleanup-region (beg end)
+       "Remove tmux artifacts from region."
+       (interactive "r")
+       (dolist (re '("\\\\│\·*\n" "\W*│\·*"))
+         (replace-regexp re "" nil beg end)))
+
+     (global-set-key (kbd "C-x M-t") 'cleanup-region)
+     (global-set-key (kbd "C-c n") 'cleanup-buffer)
+
+     (setq-default show-trailing-whitespace t)
+   #+END_SRC
+** YASnippets
+  #+BEGIN_SRC emacs-lisp
+    (require 'yasnippet)
+    (yas-reload-all)
+    (add-hook 'prog-mode-hook #'yas-minor-mode)
+  #+END_SRC
+** Emmet
+   #+BEGIN_SRC emacs-lisp
+     (require 'emmet-mode)
+     (add-hook 'sgml-mode-hook 'emmet-mode)
+     (add-hook 'css-mode-hook  'emmet-mode)
+     (add-hook 'scss-mode-hook  'emmet-mode)
+     (setq emmet-move-cursor-between-quotes t)
+   #+END_SRC
+* Editing Code
+** Syntax Checking
+   #+BEGIN_SRC emacs-lisp
+     (require 'flycheck)
+     (global-flycheck-mode)
+   #+END_SRC
+** Highlighting Indentation Levels
+   #+BEGIN_SRC emacs-lisp
+     (require 'highlight-indentation)
+     (add-hook 'prog-mode-hook 'highlight-indentation-mode)
+   #+END_SRC
+** Config Mode
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.gitconfig$" . conf-mode))
+   #+END_SRC
+** Web Mode
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
+     (add-to-list 'auto-mode-alist '("\\.erb$" . web-mode))
+   #+END_SRC
+** YAML
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+     (add-to-list 'auto-mode-alist '("\\.yaml$" . yaml-mode))
+   #+END_SRC
+** CoffeeScript
+   #+BEGIN_SRC emacs-lisp
+     (defun coffee-custom ()
+       "coffee-mode-hook"
+       (make-local-variable 'tab-width)
+       (set 'tab-width 2))
+
+     (add-hook 'coffee-mode-hook 'coffee-custom)
+   #+END_SRC
+** Markdown
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+     (add-to-list 'auto-mode-alist '("\\.mdown$" . markdown-mode))
+     (add-hook 'markdown-mode-hook
+               (lambda ()
+                 (visual-line-mode t)
+                 (writegood-mode t)
+                 (flyspell-mode t)))
+   #+END_SRC
+** Go
+   #+BEGIN_SRC emacs-lisp
+     (require 'go-autocomplete)
+
+     (add-hook 'go-mode-hook
+               (lambda ()
+                 (go-eldoc-setup)
+                 (add-hook 'before-save-hook 'gofmt-before-save)))
+   #+END_SRC
+** Python
+   #+BEGIN_SRC emacs-lisp
+     (require 'elpy)
+     (elpy-enable)
+
+     (require 'py-autopep8)
+     (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+   #+END_SRC
+** SCSS
+   #+BEGIN_SRC emacs-lisp
+     (autoload 'scss-mode "scss-mode")
+     (add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
+   #+END_SRC
+* Writing English
+** Writeroom Mode
+   #+BEGIN_SRC emacs-lisp
+     (require 'writeroom-mode)
+     (add-hook 'writeroom-mode-hook 'flyspell-mode)
+   #+END_SRC
+
+** Spelling
+   #+BEGIN_SRC emacs-lisp
+     (setq flyspell-issue-welcome-flag nil)
+     (setq-default ispell-program-name "/usr/bin/aspell")
+     (setq-default ispell-list-command "list")
+   #+END_SRC
+* Navigating
+** Ivy
+   #+BEGIN_SRC emacs-lisp
+     (require 'ivy)
+     (ivy-mode 1)
+     (setq ivy-use-virtual-buffers t)
+     (setq ivy-display-style 'fancy)
+   #+END_SRC
+* Tracking
+** Wakatime
+   #+BEGIN_SRC emacs-lisp
+     (require 'wakatime-mode)
+     (global-wakatime-mode)
+   #+END_SRC
+* Themes
+  #+BEGIN_SRC emacs-lisp
+    (load-theme 'spolsky)
+  #+END_SRC

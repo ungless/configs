@@ -11,6 +11,7 @@
    #+BEGIN_SRC emacs-lisp
     (load "package")
     (package-initialize)
+
     (add-to-list 'package-archives
                  '("marmalade" . "http://marmalade-repo.org/packages/"))
     (add-to-list 'package-archives
@@ -524,5 +525,5 @@
 * Themes
   #+BEGIN_SRC emacs-lisp
 ;    (require 'spolsky-theme)
-     (load-theme 'max t)
+     (load-theme 'apropospriate-dark t)
   #+END_SRC
