@@ -237,8 +237,8 @@ bar {
 # }
 
 # = # = # Gaps # = # = #
-gaps inner 15
-gaps outer 3
+gaps inner 0
+gaps outer 0
 
 # = # = # Proper Application Workspaces # = # = #
 assign [class="Telegram"] $ws9
