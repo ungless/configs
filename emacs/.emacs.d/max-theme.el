@@ -59,7 +59,7 @@
   (custom-theme-set-faces
    'max
    ;; default
-   `(cursor ((,class (:background ,fg3))))
+   `(cursor ((,class (:background ,str))))
    `(default ((((type nil)) (:background "#000000" :foreground ,fg1))
               (,class (:background ,bg1 :foreground ,fg1))))
    `(default-italic ((,class (:italic t))))

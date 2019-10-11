@@ -463,7 +463,7 @@
      (setq TeX-auto-save t)
      (setq TeX-parse-self t)
      (setq TeX-save-query nil)
-     (setq TeX-PDF-mode t)
+     ;(setq TeX-PDF-mode t)
 
      (require 'flymake)
 
@@ -519,11 +519,10 @@
 * Tracking
 ** Wakatime
    #+BEGIN_SRC emacs-lisp
-     (require 'wakatime-mode)
-     (global-wakatime-mode)
+;     (require 'wakatime-mode)
+ ;    (global-wakatime-mode)
    #+END_SRC
 * Themes
   #+BEGIN_SRC emacs-lisp
-;    (require 'spolsky-theme)
-     (load-theme 'apropospriate-dark t)
+     (load-theme 'whiteboard t)
   #+END_SRC
