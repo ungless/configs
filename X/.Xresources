@@ -11,15 +11,17 @@ URxvt*letterSpace:        -1
 URxvt.depth: 32
 !URxvt.background:	[95]#fef1ce
 
-URxvt.font: xft:Hack:size=10,style=regular
-URxvt.boldFont: xft:Hack:size=10,style=bold
-URxvt.italicFont: xft:Hack:pixelsize=10,style=italic
-URxvt.boldItalicFont: xft:Hack:pixelsize=10,style=bold
+URxvt.font: xft:Mononoki:size=10,style=regular
+URxvt.boldFont: xft:Mononoki:size=10,style=bold
+URxvt.italicFont: xft:Mononoki:pixelsize=10,style=italic
+URxvt.boldItalicFont: xft:Mononoki:pixelsize=10,style=bold
 
 URxvt.keysym.Control-Shift-Y: perl:clipboard:paste
 URxvt.iso14755: False
 URxvt.perl-ext-common: default,clipboard
 
+*.font:	Mononoki:pixelsize=14:antialias=true:autohint=true;
+!*.alpha: 0.9
 
 ! B E T A M A X
 ! svbtext 2016
@@ -63,26 +65,50 @@ URxvt.perl-ext-common: default,clipboard
 ! *.color7:       #421439
 ! *.color15:      #280c22
 
-! Molokai theme
-*background: #101010
-*foreground: #d0d0d0
-*cursorColor: #d0d0d0
-*color0: #101010
-*color1: #960050
-*color2: #66aa11
-*color3: #c47f2c
-*color4: #30309b
-*color5: #7e40a5
-*color6: #3579a8
-*color7: #9999aa
-*color8: #303030
-*color9: #ff0090
-*color10: #80ff00
-*color11: #ffba68
-*color12: #5f5fee
-*color13: #bb88dd
-*color14: #4eb4fa
-*color15: #d0d0d0
+! ! Molokai theme
+! *background: #101010
+! *foreground: #d0d0d0
+! *cursorColor: #d0d0d0
+! *color0: #101010
+! *color1: #960050
+! *color2: #66aa11
+! *color3: #c47f2c
+! *color4: #30309b
+! *color5: #7e40a5
+! *color6: #3579a8
+! *color7: #9999aa
+! *color8: #303030
+! *color9: #ff0090
+! *color10: #80ff00
+! *color11: #ffba68
+! *color12: #5f5fee
+! *color13: #bb88dd
+! *color14: #4eb4fa
+! *color15: #d0d0d0
+
+! Bright Theme
+*.background: #FFFFFF
+*.foreground: #4A5568
+*.cursorColor: #CBD5E9
+*.color0: #FFFFFF
+*.color1: #6B46C1
+*.color2: #E53E3E
+*.color3:#B7791F
+*.color4: #4C51BF
+*.color5: #9660D0
+*.color6: #63B3ED
+*.color7: #4A5568
+*.color8: #2D3748
+*.color9: #8af5b3
+*.color10:#48BB78
+*.color11: #ECC94B
+*.color12: #4C51BF
+*.color13: #9660D0
+*.color14: #CBD5E0
+*.color15: #2B6CB0
+*.termName: xterm-256color
+
+
 
 ! Max theme
 ! *.foreground:   #1a0e0a
