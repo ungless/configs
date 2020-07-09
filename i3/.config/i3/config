@@ -12,7 +12,7 @@ set $background2 #465457
 set $background3 #EEF5DB
 set $border1 #191919
 set $border2 #465457
-set $text1 #d5f9de
+set $text1 #2f3640
 set $text2 #F92672
 set $text3 #6d6d6d
 set $indicator #fff
@@ -256,5 +256,4 @@ exec --no-startup-id devmon
 exec --no-startup-id dunst -config $HOME/.dunstrc
 
 # = # = # Startup Applications # = # = #
-exec telegram-desktop
-exec gradio
+
