@@ -1,0 +1,4 @@
+#!/bin/sh
+
+compton --config /home/max/.config/i3/compton.conf -b
+feh --bg-scale /home/max/Pictures/Iceland.jpg
