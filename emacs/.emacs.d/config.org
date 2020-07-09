@@ -1,0 +1,414 @@
+#+TITLE: Emacs Configuration
+* Packages
+  #+begin_src emacs-lisp
+    (require 'package)
+
+    (setq package-enable-at-startup nil)
+    (setq package-archives '(("gnu" . "http://mirrors.163.com/elpa/gnu/")
+                             ("melpa" . "https://melpa.org/packages/")
+                             ("org" . "http://orgmode.org/elpa/")))
+
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package)
+      (eval-when-compile (require 'use-package)))
+
+    (setq use-package-always-ensure t)
+    ;;
+  #+end_src
+* Load Path
+  #+begin_src emacs-lisp
+    (add-to-list 'load-path "~/.emacs.d/lisp/")
+  #+end_src
+* Basic Details
+#+BEGIN_SRC emacs-lisp
+(defvar my/nbackground 'light)
+
+(setq user-full-name "Max Ungless"
+      user-mail-address "maxungless@gmail.com")
+#+end_src
+* General System Stuff + Scrolling
+#+BEGIN_SRC emacs-lisp
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
+(global-font-lock-mode t)
+
+(setq scroll-conservatively 10000
+      scroll-preserve-screen-position t)
+
+(setq echo-keystrokes 0.4)
+
+(setq inhibit-startup-message t
+      initial-major-mode 'fundamental-mode)
+
+(setq read-file-name-completion-ignore-case t)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(setq custom-file (make-temp-file "emacs-custom"))
+
+(setq line-move-visual t)
+(setq-default fill-column 80)
+
+(setq delete-old-versions t)
+
+(setq x-select-enable-clipboard t)
+;; Treat clipboard input as UTF-8 string first; compound text next, etc.
+(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+(when (functionp 'menu-bar-mode)
+  (menu-bar-mode -1))
+(when (functionp 'set-scroll-bar-mode)
+  (set-scroll-bar-mode 'nil))
+(when (functionp 'mouse-wheel-mode)
+  (mouse-wheel-mode -1))
+(when (functionp 'tooltip-mode)
+  (tooltip-mode -1))
+(when (functionp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (functionp 'blink-cursor-mode)
+  (blink-cursor-mode -1))
+
+(use-package smooth-scrolling
+  :defer t
+  :config
+  (setq smooth-scroll-margin 4))
+
+#+end_src
+* Tabs
+  #+begin_src emacs-lisp
+    ;; (setq custom-tab-width 4)
+
+    ;; (use-package aggressive-indent
+    ;;   :config
+    ;;     (global-aggressive-indent-mode 1)
+    ;;     (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+    ;; )
+
+
+    ;; ;; Two callable functions for enabling/disabling tabs in Emacs
+    ;; (defun disable-tabs () (setq indent-tabs-mode nil))
+    ;; (defun enable-tabs  ()
+    ;;   (local-set-key (kbd "TAB") 'tab-to-tab-stop)
+    ;;   (setq indent-tabs-mode t)
+    ;;   (setq tab-width custom-tab-width))
+
+    ;; ;; Hooks to Enable Tabs
+    ;; (add-hook 'prog-mode-hook 'enable-tabs)
+    ;; ;; Hooks to Disable Tabs
+    ;; (add-hook 'lisp-mode-hook 'disable-tabs)
+    ;; (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
+
+    ;; ;; Language-Specific Tweaks
+    ;; (setq-default python-indent-offset custom-tab-width) ;; Python
+    ;; (setq-default js-indent-level custom-tab-width)      ;; Javascript
+
+    ;; Making electric-indent behave sanely
+    (setq-default electric-indent-inhibit t)
+
+    ;; Make the backspace properly erase the tab instead of
+    ;; removing 1 space at a time.
+    (setq backward-delete-char-untabify-method 'hungry)
+    (setq show-trailing-whitespace t) ; Enable whitespace mode everywhere
+
+    (use-package dtrt-indent)
+
+    (setq-default indent-tabs-mode nil
+          tab-stop-list    ()
+          tab-width        4)
+  #+end_src
+* Fonts
+#+begin_src emacs-lisp
+(defun my/setup-x11-fonts ()
+  (interactive)
+  (when (eq window-system 'x)
+    ;; Font family
+    (add-to-list 'default-frame-alist '(font . "Mononoki-11"))
+    ;; Font size
+    ;;(set-face-attribute 'default nil :height 90)
+    ))
+
+(when (eq window-system 'x)
+  (add-hook 'after-init-hook #'my/setup-x11-fonts))
+#+end_src
+
+* Org
+  #+begin_src emacs-lisp
+(require 'org-tempo)  
+  #+end_src
+
+* Flycheck
+  #+begin_src emacs-lisp
+  (defun my/flycheck-customize ()
+  (interactive)
+  (global-set-key (kbd "C-c C-n") 'flycheck-tip-cycle)
+  (global-set-key (kbd "C-c C-p") 'flycheck-tip-cycle-reverse))
+
+(use-package flycheck
+  :defer t
+  :bind (("M-g M-n" . flycheck-next-error)
+         ("M-g M-p" . flycheck-previous-error)
+         ("M-g M-=" . flycheck-list-errors))
+  :init (global-flycheck-mode)
+  :diminish ""
+  :config
+  (progn
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+    (use-package flycheck-tip
+      :config (add-hook 'flycheck-mode-hook #'my/flycheck-customize))
+    (use-package helm-flycheck
+      :init (define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck))))
+  #+end_src
+
+* Origami
+  #+begin_src emacs-lisp
+(use-package origami
+  :bind (("C-c TAB" . origami-recursively-toggle-node)
+         ("C-\\" . origami-recursively-toggle-node)
+         ("M-\\" . origami-close-all-nodes)
+         ("M-+" . origami-open-all-nodes))
+  :init
+  (global-origami-mode))
+  
+  #+end_src 
+* Programming
+** Python
+   #+begin_src emacs-lisp
+(use-package python
+:defer t
+:config
+(progn
+  (define-key python-mode-map (kbd "<backtab>") 'python-back-indent)
+  (defun my/setup-jedi ()
+    (interactive)
+    (use-package jedi
+      :config
+      (progn
+
+        (jedi:setup)
+        (jedi:ac-setup)
+        (setq jedi:setup-keys t)
+        (setq jedi:complete-on-dot t)
+        (define-key python-mode-map (kbd "C-c C-d") 'jedi:show-doc)
+        (setq jedi:tooltip-method nil)
+        (set-face-attribute 'jedi:highlight-function-argument nil
+                            :foreground "green")
+        (define-key python-mode-map (kbd "C-c C-l") 'jedi:get-in-function-call))))
+  (add-hook 'python-mode-hook #'my/setup-jedi)))
+   
+   #+end_src
+
+** C
+   #+begin_src emacs-lisp
+     (setq c-basic-offset 4)
+   #+end_src
+
+** Web
+*** Rainbow-mode
+This is wonderful for any frontend work
+#+begin_src emacs-lisp
+  (use-package rainbow-mode
+    :config
+      (add-to-list 'auto-mode-alist '("\\.html\\'" . rainbow-mode))
+      (add-to-list 'auto-mode-alist '("\\.css\\'" . rainbow-mode))
+      (add-to-list 'auto-mode-alist '("\\.scss\\'" . rainbow-mode)))
+#+end_src
+
+*** Javascript
+   #+begin_src emacs-lisp
+(use-package js2-mode
+  :init
+  (progn
+    (add-to-list 'auto-mode-alist (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+    (defalias 'javascript-generic-mode 'js2-mode))
+  :config
+  (progn
+    (js2-imenu-extras-setup)
+    (setq-default js-auto-indent-flag nil
+                  js-indent-level 2))))
+   
+   #+end_src
+
+** Markdown
+   #+begin_src emacs-lisp
+(use-package markdown-mode)   
+   #+end_src
+
+** Go
+    #+BEGIN_SRC emacs-lisp
+      (use-package go-autocomplete)
+
+      (add-hook 'go-mode-hook
+		(lambda ()
+		  (go-eldoc-setup)
+		  (setq-local counsel-dash-docsets '("Go"))
+		  (add-hook 'before-save-hook 'gofmt-before-save)))
+
+      (let ((govet (flycheck-checker-get 'go-vet 'command)))
+	(when (equal (cadr govet) "tool")
+	  (setf (cdr govet) (cddr govet))))
+
+      (use-package go-mode
+	:config
+	(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
+    #+END_SRC
+* Expansions
+** Hippie Expand
+   #+begin_src emacs-lisp
+     (use-package hippie-exp
+       :ensure nil
+       :defer t
+       :bind ("<C-return>" . hippie-expand)
+       :config
+       (setq-default hippie-expand-try-functions-list
+                     '(yas-hippie-try-expand emmet-expand-line)))
+   #+end_src
+** Emmet-mode
+   #+begin_src emacs-lisp
+     (use-package emmet-mode
+       :defer t
+       :init 
+       (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+       (add-hook 'css-mode-hook  'emmet-mode)
+       :config
+        (unbind-key "<C-return>" emmet-mode-keymap))
+   #+end_src
+
+** YASnippet
+   #+begin_src emacs-lisp
+     (use-package yasnippet
+       :defer t
+       :init
+       (add-hook 'js-mode-hook 'yas-minor-mode)
+       (add-hook 'sgml-mode-hook 'yas-minor-mode)
+       :config
+       (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
+       (yas-reload-all))
+   #+end_src
+
+* Sudo-Edit
+  #+begin_src emacs-lisp
+    (use-package sudo-edit)
+  #+end_src
+* VCS
+  #+begin_src emacs-lisp
+  (use-package magit
+:defer t
+:bind ("C-x i" . magit-status)
+:init (defvar magit-emacsclient-executable nil) ;; fix for emacs-mac
+:config
+(progn
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  (if (file-exists-p  "/usr/local/bin/emacsclient")
+      (setq magit-emacsclient-executable "/usr/local/bin/emacsclient")
+    (setq magit-emacsclient-executable (executable-find "emacsclient")))
+  (defun magit-browse ()
+    "Browse to the project's github URL, if available"
+    (interactive)
+    (let ((url (with-temp-buffer
+                 (unless (zerop (call-process-shell-command
+                                 "git remote -v" nil t))
+                   (error "Failed: 'git remote -v'"))
+                 (goto-char (point-min))
+                 (when (re-search-forward
+                        "github\\.com[:/]\\(.+?\\)\\.git" nil t)
+                   (format "https://github.com/%s" (match-string 1))))))
+      (unless url
+        (error "Can't find repository URL"))
+      (browse-url url)))
+
+  (when (and (boundp 'moe-theme-which-enabled)
+             (eq moe-theme-which-enabled 'dark))
+    ;; Moe's magit colors are baaaaaaad
+    (set-face-attribute 'magit-item-highlight nil
+                        :inherit nil
+                        :foreground 'unspecified))
+
+  (define-key magit-mode-map (kbd "C-c C-b") 'magit-browse)
+  (define-key magit-mode-map (kbd "M-1") #'my/create-or-switch-to-eshell-1)
+  (define-key magit-mode-map (kbd "M-2") #'my/create-or-switch-to-eshell-2)
+  (define-key magit-mode-map (kbd "M-3") #'my/create-or-switch-to-eshell-3)
+  (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
+  (custom-set-variables '(magit-set-upstream-on-push (quote dontask)))
+  (setq magit-completing-read-function 'magit-ido-completing-read)))
+
+  #+end_src
+
+* GPG
+  #+begin_src emacs-lisp
+    (defadvice epg--start (around advice-epg-disable-agent activate)
+      (let ((agent (getenv "GPG_AGENT_INFO")))
+        (setenv "GPG_AGENT_INFO" nil)
+        ad-do-it
+        (setenv "GPG_AGENT_INFO" agent)))
+  #+end_src
+* Projectile
+  #+begin_src emacs-lisp
+(use-package projectile
+:defer t
+:bind (;;("C-x f" . projectile-find-file)
+       ("C-c p s" . projectile-switch-project)
+       ("C-c p a" . projectile-ag)
+       ("C-c p g" . projectile-grep)
+       ("C-c p b" . projectile-switch-to-buffer)
+       ("C-c p K" . projectile-kill-buffers))
+:config
+(progn
+  (defconst projectile-mode-line-lighter " P")))
+
+  
+  #+end_src
+
+* Helm
+  #+begin_src emacs-lisp
+(use-package helm
+  :bind
+  (("C-M-z" . helm-resume)
+   ("C-x C-f" . helm-find-files)
+   ("C-h b" . helm-descbinds)
+   ("C-x C-r" . helm-mini)
+   ("C-x M-o" . helm-occur)
+   ("M-y" . helm-show-kill-ring)
+   ("C-h a" . helm-apropos)
+   ("C-h m" . helm-man-woman)
+   ("M-g >" . helm-ag-this-file)
+   ("M-g ," . helm-ag-pop-stack)
+   ("M-g ." . helm-do-grep)
+   ("C-x C-i" . helm-semantic-or-imenu)
+   ("M-x" . helm-M-x)
+   ("C-x C-b" . helm-buffers-list)
+   ("C-x C-r" . helm-mini)
+   ("C-x b" . helm-mini)
+   ("C-h t" . helm-world-time))
+  :init (progn
+          ;;(helm-autoresize-mode 1)
+          (helm-mode 1))
+  :diminish "")  
+  #+end_src
+* Theme
+  #+begin_src emacs-lisp
+(require 'vivid-theme)
+(load-theme 'vivid t)  
+
+(global-hl-line-mode 1)
+  #+end_src
+
+* Parentheses
+  #+begin_src emacs-lisp
+(electric-pair-mode 1)
+(setq show-paren-delay 0)
+(setq blink-matching-paren nil)
+(show-paren-mode)
+
+(use-package rainbow-delimiters)
+
+(add-hook 'org-mode-hook
+  '(lambda () (rainbow-delimiters-mode 1)))
+(add-hook 'prog-mode-hook
+  '(lambda () (rainbow-delimiters-mode 1)))
+  
+  #+end_src
