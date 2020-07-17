@@ -11,16 +11,18 @@ URxvt*letterSpace:        -1
 URxvt.depth: 32
 !URxvt.background:	[95]#fef1ce
 
-URxvt.font: xft:Mononoki:size=10,style=regular
-URxvt.boldFont: xft:Mononoki:size=10,style=bold
-URxvt.italicFont: xft:Mononoki:pixelsize=10,style=italic
-URxvt.boldItalicFont: xft:Mononoki:pixelsize=10,style=bold
+URxvt.font: xft:Mononoki:size=11,style=regular
+URxvt.boldFont: xft:Mononoki:size=11,style=bold
+URxvt.italicFont: xft:Mononoki:pixelsize=11,style=italic
+URxvt.boldItalicFont: xft:Mononoki:pixelsize=11,style=bold
 
 URxvt.keysym.Control-Shift-Y: perl:clipboard:paste
 URxvt.iso14755: False
 URxvt.perl-ext-common: default,clipboard
 
-*.font:	Mononoki:pixelsize=14:antialias=true:autohint=true;
+*.font:	Mononoki:pixelsize=15:antialias=true:autohint=true;
+
+dmenu.font: xft.Mononoki:size=11
 !*.alpha: 0.9
 
 ! B E T A M A X
