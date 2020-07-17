@@ -1,25 +1,4 @@
 #+TITLE: Emacs Configuration
-* Packages
-  #+begin_src emacs-lisp
-    (require 'package)
-
-    (setq package-enable-at-startup nil)
-    (setq package-archives '(("gnu" . "http://mirrors.163.com/elpa/gnu/")
-                             ("melpa" . "https://melpa.org/packages/")
-                             ("org" . "http://orgmode.org/elpa/")))
-
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package)
-      (eval-when-compile (require 'use-package)))
-
-    (setq use-package-always-ensure t)
-    ;;
-  #+end_src
-* Load Path
-  #+begin_src emacs-lisp
-    (add-to-list 'load-path "~/.emacs.d/lisp/")
-  #+end_src
 * Basic Details
 #+BEGIN_SRC emacs-lisp
 (defvar my/nbackground 'light)
@@ -27,6 +6,78 @@
 (setq user-full-name "Max Ungless"
       user-mail-address "maxungless@gmail.com")
 #+end_src
+* Expansions
+** Hippie Expand
+   #+begin_src emacs-lisp
+     (use-package hippie-exp
+       :ensure nil
+       :defer t
+       :bind ("<C-return>" . hippie-expand)
+       :config
+       (setq-default hippie-expand-try-functions-list
+                     '(yas-hippie-try-expand emmet-expand-line)))
+   #+end_src
+** Emmet-mode
+   #+begin_src emacs-lisp
+     (use-package emmet-mode
+       :defer t
+       :init 
+       (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
+       (add-hook 'css-mode-hook  'emmet-mode)
+       :config
+        (unbind-key "<C-return>" emmet-mode-keymap))
+   #+end_src
+
+** YASnippet
+   #+begin_src emacs-lisp
+     (use-package yasnippet
+       :defer t
+       :init
+       (add-hook 'js-mode-hook 'yas-minor-mode)
+       (add-hook 'sgml-mode-hook 'yas-minor-mode)
+       :config
+       (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
+       (yas-reload-all))
+   #+end_src
+
+* Flycheck
+  #+begin_src emacs-lisp
+  (defun my/flycheck-customize ()
+  (interactive)
+  (global-set-key (kbd "C-c C-n") 'flycheck-tip-cycle)
+  (global-set-key (kbd "C-c C-p") 'flycheck-tip-cycle-reverse))
+
+(use-package flycheck
+  :defer t
+  :bind (("M-g M-n" . flycheck-next-error)
+         ("M-g M-p" . flycheck-previous-error)
+         ("M-g M-=" . flycheck-list-errors))
+  :init (global-flycheck-mode)
+  :diminish ""
+  :config
+  (progn
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+    (use-package flycheck-tip
+      :config (add-hook 'flycheck-mode-hook #'my/flycheck-customize))
+    (use-package helm-flycheck
+      :init (define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck))))
+  #+end_src
+
+* Fonts
+#+begin_src emacs-lisp
+(defun my/setup-x11-fonts ()
+  (interactive)
+  (when (eq window-system 'x)
+    ;; Font family
+    (add-to-list 'default-frame-alist '(font . "Mononoki-11"))
+    ;; Font size
+    ;;(set-face-attribute 'default nil :height 90)
+    ))
+
+(when (eq window-system 'x)
+  (add-hook 'after-init-hook #'my/setup-x11-fonts))
+#+end_src
+
 * General System Stuff + Scrolling
 #+BEGIN_SRC emacs-lisp
 (prefer-coding-system 'utf-8)
@@ -79,89 +130,47 @@
   (setq smooth-scroll-margin 4))
 
 #+end_src
-* Tabs
+* GPG
   #+begin_src emacs-lisp
-    ;; (setq custom-tab-width 4)
-
-    ;; (use-package aggressive-indent
-    ;;   :config
-    ;;     (global-aggressive-indent-mode 1)
-    ;;     (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
-    ;; )
-
-
-    ;; ;; Two callable functions for enabling/disabling tabs in Emacs
-    ;; (defun disable-tabs () (setq indent-tabs-mode nil))
-    ;; (defun enable-tabs  ()
-    ;;   (local-set-key (kbd "TAB") 'tab-to-tab-stop)
-    ;;   (setq indent-tabs-mode t)
-    ;;   (setq tab-width custom-tab-width))
-
-    ;; ;; Hooks to Enable Tabs
-    ;; (add-hook 'prog-mode-hook 'enable-tabs)
-    ;; ;; Hooks to Disable Tabs
-    ;; (add-hook 'lisp-mode-hook 'disable-tabs)
-    ;; (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
-
-    ;; ;; Language-Specific Tweaks
-    ;; (setq-default python-indent-offset custom-tab-width) ;; Python
-    ;; (setq-default js-indent-level custom-tab-width)      ;; Javascript
-
-    ;; Making electric-indent behave sanely
-    (setq-default electric-indent-inhibit t)
-
-    ;; Make the backspace properly erase the tab instead of
-    ;; removing 1 space at a time.
-    (setq backward-delete-char-untabify-method 'hungry)
-    (setq show-trailing-whitespace t) ; Enable whitespace mode everywhere
-
-    (use-package dtrt-indent)
-
-    (setq-default indent-tabs-mode nil
-          tab-stop-list    ()
-          tab-width        4)
+    (defadvice epg--start (around advice-epg-disable-agent activate)
+      (let ((agent (getenv "GPG_AGENT_INFO")))
+        (setenv "GPG_AGENT_INFO" nil)
+        ad-do-it
+        (setenv "GPG_AGENT_INFO" agent)))
   #+end_src
-* Fonts
-#+begin_src emacs-lisp
-(defun my/setup-x11-fonts ()
-  (interactive)
-  (when (eq window-system 'x)
-    ;; Font family
-    (add-to-list 'default-frame-alist '(font . "Mononoki-11"))
-    ;; Font size
-    ;;(set-face-attribute 'default nil :height 90)
-    ))
-
-(when (eq window-system 'x)
-  (add-hook 'after-init-hook #'my/setup-x11-fonts))
-#+end_src
-
+* Helm
+  #+begin_src emacs-lisp
+(use-package helm
+  :bind
+  (("C-M-z" . helm-resume)
+   ("C-x C-f" . helm-find-files)
+   ("C-h b" . helm-descbinds)
+   ("C-x C-r" . helm-mini)
+   ("C-x M-o" . helm-occur)
+   ("M-y" . helm-show-kill-ring)
+   ("C-h a" . helm-apropos)
+   ("C-h m" . helm-man-woman)
+   ("M-g >" . helm-ag-this-file)
+   ("M-g ," . helm-ag-pop-stack)
+   ("M-g ." . helm-do-grep)
+   ("C-x C-i" . helm-semantic-or-imenu)
+   ("M-x" . helm-M-x)
+   ("C-x C-b" . helm-buffers-list)
+   ("C-x C-r" . helm-mini)
+   ("C-x b" . helm-mini)
+   ("C-h t" . helm-world-time))
+  :init (progn
+          ;;(helm-autoresize-mode 1)
+          (helm-mode 1))
+  :diminish "")  
+  #+end_src
+* Load Path
+  #+begin_src emacs-lisp
+    (add-to-list 'load-path "~/.emacs.d/lisp/")
+  #+end_src
 * Org
   #+begin_src emacs-lisp
 (require 'org-tempo)  
-  #+end_src
-
-* Flycheck
-  #+begin_src emacs-lisp
-  (defun my/flycheck-customize ()
-  (interactive)
-  (global-set-key (kbd "C-c C-n") 'flycheck-tip-cycle)
-  (global-set-key (kbd "C-c C-p") 'flycheck-tip-cycle-reverse))
-
-(use-package flycheck
-  :defer t
-  :bind (("M-g M-n" . flycheck-next-error)
-         ("M-g M-p" . flycheck-previous-error)
-         ("M-g M-=" . flycheck-list-errors))
-  :init (global-flycheck-mode)
-  :diminish ""
-  :config
-  (progn
-    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
-    (use-package flycheck-tip
-      :config (add-hook 'flycheck-mode-hook #'my/flycheck-customize))
-    (use-package helm-flycheck
-      :init (define-key flycheck-mode-map (kbd "C-c ! h") 'helm-flycheck))))
   #+end_src
 
 * Origami
@@ -175,6 +184,38 @@
   (global-origami-mode))
   
   #+end_src 
+* Packages
+  #+begin_src emacs-lisp
+    (require 'package)
+
+    (setq package-enable-at-startup nil)
+    (setq package-archives '(("gnu" . "http://mirrors.163.com/elpa/gnu/")
+                             ("melpa" . "https://melpa.org/packages/")
+                             ("org" . "http://orgmode.org/elpa/")))
+
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package)
+      (eval-when-compile (require 'use-package)))
+
+    (setq use-package-always-ensure t)
+    ;;
+  #+end_src
+* Parentheses
+  #+begin_src emacs-lisp
+(electric-pair-mode 1)
+(setq show-paren-delay 0)
+(setq blink-matching-paren nil)
+(show-paren-mode)
+
+(use-package rainbow-delimiters)
+
+(add-hook 'org-mode-hook
+  '(lambda () (rainbow-delimiters-mode 1)))
+(add-hook 'prog-mode-hook
+  '(lambda () (rainbow-delimiters-mode 1)))
+  
+  #+end_src
 * Programming
 ** Python
    #+begin_src emacs-lisp
@@ -218,6 +259,20 @@ This is wonderful for any frontend work
       (add-to-list 'auto-mode-alist '("\\.scss\\'" . rainbow-mode)))
 #+end_src
 
+*** Web-mode
+    #+begin_src emacs-lisp
+      (use-package web-mode
+        :config
+        (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+        (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.ejs\\'" . web-mode))
+      (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode)))
+    #+end_src
 *** Javascript
    #+begin_src emacs-lisp
 (use-package js2-mode
@@ -229,7 +284,7 @@ This is wonderful for any frontend work
   (progn
     (js2-imenu-extras-setup)
     (setq-default js-auto-indent-flag nil
-                  js-indent-level 2))))
+                  js-indent-level 4))))
    
    #+end_src
 
@@ -256,44 +311,94 @@ This is wonderful for any frontend work
 	:config
 	(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode)))
     #+END_SRC
-* Expansions
-** Hippie Expand
+** Terraform
    #+begin_src emacs-lisp
-     (use-package hippie-exp
-       :ensure nil
-       :defer t
-       :bind ("<C-return>" . hippie-expand)
-       :config
-       (setq-default hippie-expand-try-functions-list
-                     '(yas-hippie-try-expand emmet-expand-line)))
+     (use-package terraform-mode
+       :config 	(add-to-list 'auto-mode-alist '("\\.tf\\'" . terraform-mode)))
    #+end_src
-** Emmet-mode
+** YAML
    #+begin_src emacs-lisp
-     (use-package emmet-mode
-       :defer t
-       :init 
-       (add-hook 'sgml-mode-hook 'emmet-mode) ;; Auto-start on any markup modes
-       (add-hook 'css-mode-hook  'emmet-mode)
-       :config
-        (unbind-key "<C-return>" emmet-mode-keymap))
+     (use-package yaml-mode
+       :config (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
    #+end_src
+* Projectile
+  #+begin_src emacs-lisp
+    (use-package helm-projectile)
 
-** YASnippet
-   #+begin_src emacs-lisp
-     (use-package yasnippet
-       :defer t
-       :init
-       (add-hook 'js-mode-hook 'yas-minor-mode)
-       (add-hook 'sgml-mode-hook 'yas-minor-mode)
-       :config
-       (setq-default yas-snippet-dirs '("~/.emacs.d/snippets"))
-       (yas-reload-all))
-   #+end_src
+    (use-package projectile
+    :defer t
+    :bind (("C-x f" . helm-projectile-find-file)
+           ("C-c p s" . helm-projectile-switch-project)
+           ("C-c p a" . helm-projectile-ag)
+           ("C-c p g" . helm-projectile-grep)
+           ("C-c p h" . helm-projectile)
+           ("C-c p b" . helm-projectile-switch-to-buffer)
+           ("C-c p K" . helm-projectile-kill-buffers))
+    :config
+    (projectile-global-mode)
+    (setq projectile-completion-system 'helm)
+    (helm-projectile-on)
+    (setq projectile-switch-project-action 'helm-projectile-find-file)
+    (setq projectile-switch-project-action 'helm-projectile)
+    (setq projectile-project-search-path '("~/workspace/programming/web/" "/usr/src/" "~/workspace/programming/go/src/" "~/workspace/programming/c/" "~/workspace/programming/python/"))
+    (progn
+      (defconst projectile-mode-line-lighter " P")))
+  #+end_src
 
 * Sudo-Edit
   #+begin_src emacs-lisp
     (use-package sudo-edit)
   #+end_src
+* Tabs
+  #+begin_src emacs-lisp
+    ;; (setq custom-tab-width 4)
+
+    ;; (use-package aggressive-indent
+    ;;   :config
+    ;;     (global-aggressive-indent-mode 1)
+    ;;     (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+    ;; )
+
+
+    ;; ;; Two callable functions for enabling/disabling tabs in Emacs
+    ;; (defun disable-tabs () (setq indent-tabs-mode nil))
+    ;; (defun enable-tabs  ()
+    ;;   (local-set-key (kbd "TAB") 'tab-to-tab-stop)
+    ;;   (setq indent-tabs-mode t)
+    ;;   (setq tab-width custom-tab-width))
+
+    ;; ;; Hooks to Enable Tabs
+    ;; (add-hook 'prog-mode-hook 'enable-tabs)
+    ;; ;; Hooks to Disable Tabs
+    ;; (add-hook 'lisp-mode-hook 'disable-tabs)
+    ;; (add-hook 'emacs-lisp-mode-hook 'disable-tabs)
+
+    ;; ;; Language-Specific Tweaks
+    ;; (setq-default python-indent-offset custom-tab-width) ;; Python
+    ;; (setq-default js-indent-level custom-tab-width)      ;; Javascript
+
+    ;; Making electric-indent behave sanely
+    (setq-default electric-indent-inhibit t)
+
+    ;; Make the backspace properly erase the tab instead of
+    ;; removing 1 space at a time.
+    (setq backward-delete-char-untabify-method 'hungry)
+    (setq show-trailing-whitespace t) ; Enable whitespace mode everywhere
+
+    (use-package dtrt-indent)
+
+    (setq-default indent-tabs-mode nil
+          tab-stop-list    ()
+          tab-width        4)
+  #+end_src
+* Theme
+  #+begin_src emacs-lisp
+(require 'vivid-theme)
+(load-theme 'vivid t)  
+
+(global-hl-line-mode 1)
+  #+end_src
+
 * VCS
   #+begin_src emacs-lisp
   (use-package magit
@@ -338,77 +443,3 @@ This is wonderful for any frontend work
 
   #+end_src
 
-* GPG
-  #+begin_src emacs-lisp
-    (defadvice epg--start (around advice-epg-disable-agent activate)
-      (let ((agent (getenv "GPG_AGENT_INFO")))
-        (setenv "GPG_AGENT_INFO" nil)
-        ad-do-it
-        (setenv "GPG_AGENT_INFO" agent)))
-  #+end_src
-* Projectile
-  #+begin_src emacs-lisp
-(use-package projectile
-:defer t
-:bind (;;("C-x f" . projectile-find-file)
-       ("C-c p s" . projectile-switch-project)
-       ("C-c p a" . projectile-ag)
-       ("C-c p g" . projectile-grep)
-       ("C-c p b" . projectile-switch-to-buffer)
-       ("C-c p K" . projectile-kill-buffers))
-:config
-(progn
-  (defconst projectile-mode-line-lighter " P")))
-
-  
-  #+end_src
-
-* Helm
-  #+begin_src emacs-lisp
-(use-package helm
-  :bind
-  (("C-M-z" . helm-resume)
-   ("C-x C-f" . helm-find-files)
-   ("C-h b" . helm-descbinds)
-   ("C-x C-r" . helm-mini)
-   ("C-x M-o" . helm-occur)
-   ("M-y" . helm-show-kill-ring)
-   ("C-h a" . helm-apropos)
-   ("C-h m" . helm-man-woman)
-   ("M-g >" . helm-ag-this-file)
-   ("M-g ," . helm-ag-pop-stack)
-   ("M-g ." . helm-do-grep)
-   ("C-x C-i" . helm-semantic-or-imenu)
-   ("M-x" . helm-M-x)
-   ("C-x C-b" . helm-buffers-list)
-   ("C-x C-r" . helm-mini)
-   ("C-x b" . helm-mini)
-   ("C-h t" . helm-world-time))
-  :init (progn
-          ;;(helm-autoresize-mode 1)
-          (helm-mode 1))
-  :diminish "")  
-  #+end_src
-* Theme
-  #+begin_src emacs-lisp
-(require 'vivid-theme)
-(load-theme 'vivid t)  
-
-(global-hl-line-mode 1)
-  #+end_src
-
-* Parentheses
-  #+begin_src emacs-lisp
-(electric-pair-mode 1)
-(setq show-paren-delay 0)
-(setq blink-matching-paren nil)
-(show-paren-mode)
-
-(use-package rainbow-delimiters)
-
-(add-hook 'org-mode-hook
-  '(lambda () (rainbow-delimiters-mode 1)))
-(add-hook 'prog-mode-hook
-  '(lambda () (rainbow-delimiters-mode 1)))
-  
-  #+end_src
